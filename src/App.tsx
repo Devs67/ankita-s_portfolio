@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { href, useRoute } from './router';
+import { revealOnScroll, scrollToTarget, startSmoothScroll } from './motion';
 import { PROFILE } from './content/profile';
 import { HomePage, hasContact } from './pages/HomePage';
 import { ObservationsPage } from './pages/ObservationsPage';
@@ -41,15 +42,19 @@ export default function App() {
   const path = useRoute();
   const key = path.join('/');
 
-  // Section links (#/about) scroll within the home page; every other route starts at the top.
-  useEffect(() => {
-    const section = path.length === 1 && HOME_SECTIONS.includes(path[0]) ? path[0] : null;
-    if (section) document.getElementById(section)?.scrollIntoView();
-    else window.scrollTo(0, 0);
-  }, [key]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const activeTop = path[0] ?? '';
   const isHome = !(path[0] === 'evidence' && path[1]);
+
+  useEffect(startSmoothScroll, []);
+
+  // Rise/sink reveals, set up again whenever a different page is shown
+  useLayoutEffect(() => revealOnScroll(document.getElementById('main')!), [isHome ? 'home' : key]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Section links (#/about) scroll within the home page; every other route starts at the top.
+  useEffect(() => {
+    const section = path.length === 1 && HOME_SECTIONS.includes(path[0]) ? document.getElementById(path[0]) : null;
+    scrollToTarget(section ?? 0);
+  }, [key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="flex min-h-screen flex-col">

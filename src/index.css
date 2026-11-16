@@ -30,6 +30,10 @@
     color-scheme: light;
     scroll-behavior: smooth;
   }
+  /* Lenis does the smoothing itself; native smooth scrolling would fight it */
+  html.lenis {
+    scroll-behavior: auto;
+  }
   body {
     @apply bg-paper text-graphite font-sans antialiased;
     font-size: 1.0625rem;

@@ -62,6 +62,9 @@ const EVIDENCE_STYLE: Record<string, { icon: IconName; tile: string }> = {
 
 const hasContact = Boolean(PROFILE.email || PROFILE.linkedin);
 
+/** Soft, slightly different paper colours for the experience cards: sky, mint, butter, blush, slate. */
+const ROLE_TINTS = ['#eef3fd', '#e8f5ef', '#fcf5dc', '#fbeeeb', '#eceff8'];
+
 /** A full-width band of colour with the page-width content inside. */
 function Band({
   tone = 'paper',
@@ -207,39 +210,46 @@ export function HomePage() {
         </Row>
       </Band>
 
-      {/* Experience: a timeline with a picture for each kind of setting */}
+      {/* Experience: one card per role. On larger screens each card sticks near the top and the next one slides up over it. */}
       <Band id="experience" className="py-16 sm:py-20">
         <SectionTitle label="Experience">From clinical training to the classroom</SectionTitle>
-        <ol className="mt-6">
+        {/* While stacking, every card is as tall as the tallest so each one fully covers the last */}
+        <ol className="mt-8 grid gap-6 [@media(min-width:768px)_and_(min-height:640px)]:auto-rows-fr">
           {EXPERIENCE.map((role, i) => (
-            <li key={`${role.title}-${role.dates}`}>
-              <Row as="div" className="py-6" margin={<p className="font-mono text-sm text-margin">{role.dates}</p>}>
-                <div className="relative flex gap-5">
-                  {i < EXPERIENCE.length - 1 && (
-                    <span aria-hidden="true" className="absolute top-16 -bottom-8 left-7 w-0.5 bg-rule" />
-                  )}
-                  <span className="relative grid h-14 w-14 shrink-0 place-items-center rounded-2xl border-2 border-ink bg-white">
-                    <Icon name={ROLE_ICON[role.kind]} className="h-9 w-9" />
+            <li
+              key={`${role.title}-${role.dates}`}
+              data-static
+              className="[@media(min-width:768px)_and_(min-height:640px)]:sticky"
+              style={{ top: `${24 + i * 18}px` }}
+            >
+              <article
+                className="grid h-full content-start gap-5 rounded-[1.75rem] border-2 border-ink p-6 shadow-[0_-12px_32px_-20px_rgba(30,43,111,0.45)] sm:grid-cols-[auto_1fr] sm:gap-7 sm:p-8"
+                style={{ backgroundColor: ROLE_TINTS[i % ROLE_TINTS.length] }}
+              >
+                <div className="flex items-center gap-4 sm:flex-col sm:items-start">
+                  <span className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl border-2 border-ink bg-white">
+                    <Icon name={ROLE_ICON[role.kind]} className="h-10 w-10" />
                   </span>
-                  <div className="min-w-0">
-                    <h3 className="font-sans text-lg font-bold">{role.title}</h3>
-                    <p className="text-ink">{role.org}</p>
-                    <ul className="mt-3 max-w-3xl space-y-1.5">
-                      {role.points.map((point) => (
-                        <li key={point} className="flex gap-2.5">
-                          <span aria-hidden="true" className="mt-[0.7em] h-1 w-1 shrink-0 rounded-full bg-graphite/60" />
-                          <span>{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <p className="font-mono text-sm text-margin">{role.dates}</p>
                 </div>
-              </Row>
+                <div className="min-w-0">
+                  <h3 className="font-display text-2xl leading-tight">{role.title}</h3>
+                  <p className="mt-1 text-ink">{role.org}</p>
+                  <ul className="mt-4 max-w-3xl space-y-1.5">
+                    {role.points.map((point) => (
+                      <li key={point} className="flex gap-2.5">
+                        <span aria-hidden="true" className="mt-[0.7em] h-1 w-1 shrink-0 rounded-full bg-graphite/60" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
             </li>
           ))}
         </ol>
-        <Row className="pb-4">
-          <p className="max-w-3xl pl-[4.75rem] text-[0.9375rem]">{OTHER_WORK}</p>
+        <Row className="pt-6 pb-4">
+          <p className="max-w-3xl text-[0.9375rem]">{OTHER_WORK}</p>
         </Row>
         <Row className="pt-8">
           <div className="grid gap-6 md:grid-cols-[1fr_1.4fr]">
