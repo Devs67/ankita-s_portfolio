@@ -1,5 +1,5 @@
 import { CircledLetter, MarginNote, Row } from '../components/ui';
-import { PROFILE, SCHOOL_LABEL } from '../content/profile';
+import { EDUCATION, EXPERIENCE, EXPERTISE, OTHER_WORK, PROFILE, SCHOOL_LABEL } from '../content/profile';
 import { href } from '../router';
 import { EVIDENCE_INDEX } from '../content/evidenceIndex';
 
@@ -23,8 +23,8 @@ const HERO_LINES = [
 
 const METHOD = [
   {
-    title: 'Observe',
-    text: 'Record each incident as it happens: what came just before, what the child did, what followed, where, when and for how long.',
+    title: 'Observe and assess',
+    text: 'Record each incident as it happens — what came just before, what the child did, what followed, where and for how long — alongside formal assessment such as VB-MAPP.',
     link: { label: 'Observation records', to: href('evidence', 'observations') },
   },
   {
@@ -39,7 +39,7 @@ const METHOD = [
   },
   {
     title: 'Coach the team',
-    text: 'Homeroom teachers, shadow teachers, learning support assistants and parents practise the same responses, so the child meets the same answer everywhere.',
+    text: 'Homeroom and subject teachers, shadow teachers and parents practise the same responses, so the child meets the same answer everywhere. I also train and mentor new shadow teachers.',
   },
   {
     title: 'Review',
@@ -53,10 +53,10 @@ const hasContact = Boolean(PROFILE.email || PROFILE.linkedin);
 export function HomePage() {
   const facts = [
     ['Role', PROFILE.role],
-    ['Where', PROFILE.school || 'International Baccalaureate (IB) school'],
-    ['Works with', 'Homeroom teachers, shadow teachers, learning support assistants and parents'],
-    ['Experience', PROFILE.experience],
-    ['Qualifications', PROFILE.credentials],
+    ['School', PROFILE.school],
+    ['Programmes', PROFILE.programmes],
+    ['Qualification', PROFILE.credentials],
+    ['Works with', 'Homeroom and subject teachers, shadow teachers, the counselling team and parents'],
   ].filter(([, value]) => value);
 
   return (
@@ -65,7 +65,7 @@ export function HomePage() {
       <section aria-labelledby="hero-title" className="pt-14 pb-16 sm:pt-20 sm:pb-24">
         <Row margin={<MarginNote>Date: {new Date().toLocaleDateString('en-GB')}</MarginNote>}>
           <p className="font-mono text-sm text-graphite">
-            {PROFILE.name} · {PROFILE.role}
+            {PROFILE.name} · {PROFILE.role} · {PROFILE.location}
           </p>
           <h1 id="hero-title" className="sr-only">
             {PROFILE.name}, {PROFILE.role}
@@ -115,13 +115,15 @@ export function HomePage() {
         <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_18rem]">
           <div className="max-w-2xl space-y-4">
             <p>
-              I’m {PROFILE.name}, a {PROFILE.role.toLowerCase()} at {SCHOOL_LABEL}. Most of my day happens away from a desk — in
-              classrooms, corridors, assemblies, the lunch hall and the line for sports — noting what happens just before a
-              behaviour, what it looks like, and what follows.
+              I’m {PROFILE.firstName}, a psychology-trained {PROFILE.role.toLowerCase()} at {SCHOOL_LABEL}. I support students’
+              behavioural, emotional and learning needs across the {PROFILE.programmes} years — one-to-one, in small groups, and
+              inside the mainstream classroom.
             </p>
             <p>
-              From those notes I work out what the behaviour is doing for the child. Then I plan with the class team, so the next
-              time that moment comes round, it goes differently — and the child has a better way to ask for what they need.
+              Most of my day happens away from a desk: in classrooms, corridors, assemblies, the lunch hall and the line for
+              sports, noting what happens just before a behaviour, what it looks like, and what follows. From those notes I work
+              out what the behaviour is doing for the child, then plan with teachers and parents so the next time that moment
+              comes round, it goes differently.
             </p>
           </div>
           <dl className="space-y-4 text-[0.9375rem]">
@@ -132,6 +134,59 @@ export function HomePage() {
               </div>
             ))}
           </dl>
+        </div>
+      </Row>
+
+      {/* Experience: dates sit in the margin, like the dated entries in an observation notebook */}
+      <Row id="experience" margin={<MarginNote>Experience</MarginNote>} className="border-t border-rule pt-16 pb-4">
+        <h2 className="max-w-2xl text-3xl leading-tight sm:text-4xl">From clinical training to the classroom</h2>
+      </Row>
+      <ol>
+        {EXPERIENCE.map((role) => (
+          <li key={`${role.title}-${role.dates}`}>
+            <Row as="div" className="py-7" margin={<p className="font-mono text-sm text-margin md:pt-1">{role.dates}</p>}>
+              <h3 className="font-sans text-lg font-bold">{role.title}</h3>
+              <p className="text-ink">{role.org}</p>
+              <ul className="mt-3 max-w-3xl space-y-1.5">
+                {role.points.map((point) => (
+                  <li key={point} className="flex gap-2.5">
+                    <span aria-hidden="true" className="mt-[0.7em] h-1 w-1 shrink-0 rounded-full bg-graphite/60" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </Row>
+          </li>
+        ))}
+      </ol>
+      <Row className="pb-6">
+        <p className="max-w-3xl text-[0.9375rem]">{OTHER_WORK}</p>
+      </Row>
+      <Row className="pt-6 pb-16">
+        <div className="grid max-w-5xl gap-10 border-t border-dashed border-rule pt-8 md:grid-cols-[1fr_1.4fr]">
+          <div>
+            <h3 className="mb-3 font-sans text-[0.8125rem] font-bold uppercase tracking-wider">Education</h3>
+            <ul className="space-y-3">
+              {EDUCATION.map((e) => (
+                <li key={e.degree}>
+                  <span className="text-ink">{e.degree}</span>
+                  <span className="block font-mono text-sm">
+                    {e.place} · {e.year}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="mb-3 font-sans text-[0.8125rem] font-bold uppercase tracking-wider">Areas of expertise</h3>
+            <ul className="flex flex-wrap gap-2">
+              {EXPERTISE.map((skill) => (
+                <li key={skill} className="rounded-full border border-rule px-3 py-1 text-[0.9375rem] text-ink">
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </Row>
 

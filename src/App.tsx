@@ -8,10 +8,11 @@ import { SupportPlansPage } from './pages/SupportPlansPage';
 import { BehaviourAreasPage } from './pages/BehaviourAreasPage';
 import { GlossaryPage } from './pages/GlossaryPage';
 
-const HOME_SECTIONS = ['about', 'method', 'evidence', 'contact'];
+const HOME_SECTIONS = ['about', 'experience', 'method', 'evidence', 'contact'];
 
 const NAV = [
   ['About', 'about'],
+  ['Experience', 'experience'],
   ['Method', 'method'],
   ['Evidence', 'evidence'],
   ...(hasContact ? [['Contact', 'contact']] : []),
