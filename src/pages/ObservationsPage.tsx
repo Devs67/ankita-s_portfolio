@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { INITIAL_ABC_LOGS } from '../data/behavioralData';
+import { INCIDENT_STORIES, StoryPanel } from '../data/incidentStories';
 import { ABCEntry, BehaviorFunction } from '../types/behavioral';
 import { calculateFunctionDistribution, generateTimeOfDayDistribution } from '../utils/behavioralAnalysis';
 import { CircledLetter, SubHeading, splitTimestamp } from '../components/ui';
@@ -184,6 +185,39 @@ function DayStrip({ logs, peakIndex }: { logs: ABCEntry[]; peakIndex: number }) 
   );
 }
 
+/** One drawn panel (360×260). The hand-lettered words sit on top as text and scale with the picture. */
+function StoryPicture({ panel }: { panel: StoryPanel }) {
+  const x = (v: number) => `${(v / 360) * 100}%`;
+  const y = (v: number) => `${(v / 260) * 100}%`;
+  const size = (px: number) => `${px / 3.6}cqw`;
+  const ink = (red: boolean) => (red ? 'text-margin' : 'text-ink');
+  return (
+    <div className="relative aspect-[360/260] w-full [container-type:inline-size]">
+      <img src={`${import.meta.env.BASE_URL}${panel.file}`} alt="" width={360} height={260} loading="lazy" className="absolute inset-0 h-full w-full" />
+      <div aria-hidden="true" className="absolute inset-0 font-hand font-bold">
+        {panel.says.map((s) => (
+          <span
+            key={s.text}
+            className={`absolute text-center ${ink(s.red)}`}
+            style={{ left: x(s.x), top: y(s.y + 4), width: x(s.w), fontSize: size(16), lineHeight: size(26) }}
+          >
+            {s.text}
+          </span>
+        ))}
+        {panel.words.map((w) => (
+          <span
+            key={w.text}
+            className={`absolute whitespace-nowrap ${ink(w.red)}`}
+            style={{ left: x(w.x), top: y(w.y), fontSize: size(w.size), lineHeight: 1.6, transform: w.rot ? `rotate(${w.rot}deg)` : undefined }}
+          >
+            {w.text}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const ABC = [
   { key: 'antecedent', letter: 'A', label: 'Just before' },
   { key: 'behavior', letter: 'B', label: 'What happened' },
@@ -194,6 +228,7 @@ function RecordCard({ log }: { log: ABCEntry }) {
   const [open, setOpen] = useState(false);
   const { date, time } = splitTimestamp(log.timestamp);
   const student = log.studentCode.replace(/\s*\(.*\)/, '');
+  const story = INCIDENT_STORIES[log.id];
 
   return (
     <article className="rounded-2xl bg-white/85 p-5 ring-1 ring-rule sm:p-6">
@@ -215,20 +250,33 @@ function RecordCard({ log }: { log: ABCEntry }) {
       </header>
 
       <ol className="mt-5 grid gap-3 md:grid-cols-3 md:gap-0">
-        {ABC.map((step, i) => (
-          <li key={step.key} className="relative flex gap-3 rounded-xl bg-wash/60 p-3.5 md:mr-6">
-            <CircledLetter letter={step.letter} className="h-8 w-8" />
-            <div className="min-w-0">
-              <p className="font-mono text-xs">{step.label}</p>
-              <p className={`text-[0.9375rem] text-ink ${open ? '' : 'line-clamp-3'}`}>{log[step.key]}</p>
-            </div>
-            {i < 2 && (
-              <span aria-hidden="true" className="absolute top-1/2 -right-5 hidden -translate-y-1/2 font-display text-xl text-margin md:block">
-                →
-              </span>
-            )}
-          </li>
-        ))}
+        {ABC.map((step, i) => {
+          const panel = story?.panels[i];
+          return (
+            <li key={step.key} className="relative overflow-hidden rounded-xl bg-wash/60 md:mr-6">
+              {panel && <StoryPicture panel={panel} />}
+              <div className="flex gap-3 p-3.5">
+                <CircledLetter letter={step.letter} className="h-8 w-8" />
+                <div className="min-w-0">
+                  <p className="font-mono text-xs">{step.label}</p>
+                  {panel ? (
+                    <>
+                      <p className="text-[0.9375rem] text-ink">{panel.caption}</p>
+                      {open && <p className="mt-2 border-t border-dashed border-rule pt-2 text-sm">{log[step.key]}</p>}
+                    </>
+                  ) : (
+                    <p className={`text-[0.9375rem] text-ink ${open ? '' : 'line-clamp-3'}`}>{log[step.key]}</p>
+                  )}
+                </div>
+              </div>
+              {i < 2 && (
+                <span aria-hidden="true" className="absolute top-1/2 -right-5 hidden -translate-y-1/2 font-display text-xl text-margin md:block">
+                  →
+                </span>
+              )}
+            </li>
+          );
+        })}
       </ol>
 
       {open && (
