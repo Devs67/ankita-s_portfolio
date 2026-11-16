@@ -69,7 +69,7 @@ export default function App() {
       </a>
 
       <header className="border-b border-rule bg-paper/60 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:px-6">
+        <div className="mx-auto flex max-w-[120rem] flex-col gap-3 px-4 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:px-8 lg:px-12 xl:px-16">
           <a href={href()} className="group flex items-baseline gap-3">
             <span className="font-display text-2xl text-ink">{PROFILE.name}</span>
             <span className="font-mono text-[0.8125rem] text-graphite">{PROFILE.role}</span>
@@ -99,14 +99,14 @@ export default function App() {
           // The home page lays out its own full-width bands
           <HomePage />
         ) : (
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mx-auto max-w-[120rem] px-4 sm:px-8 lg:px-12 xl:px-16">
             <Page path={path} />
           </div>
         )}
       </main>
 
       <footer className="border-t border-rule">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm sm:flex-row sm:justify-between sm:px-6">
+        <div className="mx-auto flex max-w-[120rem] flex-col gap-2 px-4 py-8 text-sm sm:flex-row sm:justify-between sm:px-8 lg:px-12 xl:px-16">
           <p>
             <span className="text-ink">{PROFILE.name}</span> · {PROFILE.role}
           </p>

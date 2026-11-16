@@ -82,7 +82,7 @@ function Band({
   const bg = { paper: '', wash: 'bg-wash/55', grid: 'grid-paper', ink: 'bg-ink text-paper/80' }[tone];
   return (
     <section id={id} aria-label={label} className={`relative scroll-mt-0 ${bg}`}>
-      <div className={`relative mx-auto max-w-6xl px-4 sm:px-6 ${className}`}>
+      <div className={`relative mx-auto max-w-[120rem] px-4 sm:px-8 lg:px-12 xl:px-16 ${className}`}>
         {children}
       </div>
     </section>
@@ -106,21 +106,21 @@ export function HomePage() {
           <div className="grid items-center gap-12 lg:grid-cols-[1fr_auto]">
             <div>
               <p className="font-hand text-2xl text-margin">Hello, I’m</p>
-              <h1 className="text-[2.75rem] leading-[1.05] sm:text-7xl">{PROFILE.name}</h1>
+              <h1 className="text-[2.75rem] leading-[1.05] sm:text-7xl xl:text-8xl">{PROFILE.name}</h1>
               <p className="mt-3 inline-flex flex-wrap items-center gap-2 font-mono text-sm">
                 <span className="rounded-full bg-ink px-3 py-1 text-paper">{PROFILE.role}</span>
                 <span className="rounded-full border border-rule bg-white px-3 py-1 text-ink">{PROFILE.programmes}</span>
               </p>
-              <p className="mt-8 max-w-2xl font-display text-[1.6rem] leading-snug text-ink sm:text-[2.05rem] sm:leading-[1.3]">
+              <p className="mt-8 max-w-2xl font-display text-[1.6rem] leading-snug text-ink sm:text-[2.05rem] sm:leading-[1.3] xl:max-w-4xl xl:text-[2.6rem]">
                 I help children from the early years to middle school <span className="highlight">cope, learn and belong</span> in
                 the mainstream classroom.
               </p>
-              <p className="mt-5 max-w-xl text-lg">
+              <p className="mt-5 max-w-xl text-lg xl:max-w-3xl xl:text-xl">
                 I observe what sets a behaviour off, write support plans with teachers and parents, and teach children the skills
                 that work better — currently at {SCHOOL_LABEL}.
               </p>
               {/* Her degree and how long she has worked in the field */}
-              <dl className="mt-7 grid max-w-2xl gap-5 sm:grid-cols-2">
+              <dl className="mt-7 grid max-w-2xl gap-5 sm:grid-cols-2 xl:max-w-4xl xl:gap-8">
                 <div className="border-l-2 border-margin pl-4">
                   <dt className="font-mono text-xs uppercase tracking-wider text-margin">Qualification</dt>
                   <dd className="mt-1">
@@ -173,8 +173,8 @@ export function HomePage() {
       <Band id="about" className="py-16 sm:py-20">
         <SectionTitle label="About">Behaviour is communication. My job is to translate it.</SectionTitle>
         <Row>
-          <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1fr_22rem]">
-            <div className="max-w-2xl space-y-4">
+          <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1fr_22rem] xl:grid-cols-[1fr_28rem] xl:gap-16">
+            <div className="max-w-2xl space-y-4 xl:max-w-4xl xl:text-lg">
               <p>
                 I’m {PROFILE.firstName}, a psychology-trained {PROFILE.role.toLowerCase()} at {SCHOOL_LABEL}. I support students’
                 behavioural, emotional and learning needs across the {PROFILE.programmes} years — one-to-one, in small groups,
@@ -187,7 +187,7 @@ export function HomePage() {
               </p>
               <p className="font-mono text-sm text-ink">{PROFILE.credentials}</p>
             </div>
-            <figure className="mx-auto w-full max-w-[22rem]">
+            <figure className="mx-auto w-full max-w-[22rem] xl:max-w-[28rem]">
               <SupportCircle />
               <figcaption className="mt-1 text-center font-hand text-lg text-margin">one plan, the same response everywhere</figcaption>
             </figure>
@@ -346,7 +346,7 @@ export function HomePage() {
         <SectionTitle label="Evidence">Evidence of practice</SectionTitle>
         <Row>
           <p className="mt-3 max-w-2xl">Records, plans and case studies from school-based work. All student details are de-identified.</p>
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
             {EVIDENCE_INDEX.map((item) => {
               const style = EVIDENCE_STYLE[item.slug] ?? { icon: 'notebook' as IconName, tile: 'bg-wash' };
               return (

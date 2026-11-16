@@ -282,7 +282,7 @@ export function Portrait() {
     .map((w) => w[0])
     .join('');
   return (
-    <figure className="relative mx-auto w-60 rotate-2 bg-white p-3 pb-2 shadow-[0_18px_40px_-18px_rgba(30,43,111,0.45)] ring-1 ring-rule sm:w-72">
+    <figure className="relative mx-auto w-60 rotate-2 bg-white p-3 pb-2 shadow-[0_18px_40px_-18px_rgba(30,43,111,0.45)] ring-1 ring-rule sm:w-72 xl:w-96">
       <span aria-hidden="true" className="absolute -top-3.5 left-1/2 h-7 w-28 -translate-x-1/2 -rotate-3 bg-tape/75" />
       <div className="aspect-[4/5] overflow-hidden bg-sky">
         {failed ? (
