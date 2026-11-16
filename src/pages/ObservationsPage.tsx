@@ -172,11 +172,11 @@ function DayStrip({ logs, peakIndex }: { logs: ABCEntry[]; peakIndex: number }) 
         </text>
       ))}
       {dots.map(({ log, x, y }) => {
-        const { date, time } = splitTimestamp(log.timestamp);
+        const { time } = splitTimestamp(log.timestamp);
         return (
           <circle key={log.id} cx={x} cy={y} r="8.5" fill={FN_FILL[log.perceivedFunction]} stroke="var(--color-ink)" strokeWidth="2">
             <title>
-              {`${time}, ${date} · ${FUNCTION_LOOK[log.perceivedFunction].short} · ${log.intensity}`}
+              {`${time} · ${FUNCTION_LOOK[log.perceivedFunction].short} · ${log.intensity}`}
             </title>
           </circle>
         );
@@ -226,7 +226,7 @@ const ABC = [
 
 function RecordCard({ log }: { log: ABCEntry }) {
   const [open, setOpen] = useState(false);
-  const { date, time } = splitTimestamp(log.timestamp);
+  const { time } = splitTimestamp(log.timestamp);
   const student = log.studentCode.replace(/\s*\(.*\)/, '');
   const story = INCIDENT_STORIES[log.id];
 
@@ -234,7 +234,7 @@ function RecordCard({ log }: { log: ABCEntry }) {
     <article className="rounded-2xl bg-white/85 p-5 ring-1 ring-rule sm:p-6">
       <header className="flex flex-wrap items-center gap-x-5 gap-y-2">
         <span className="font-mono text-sm text-margin">
-          {date} · {time}
+          {time}
         </span>
         <SettingBadge setting={log.setting} />
         <IntensityMeter level={log.intensity} />
