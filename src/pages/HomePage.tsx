@@ -62,7 +62,7 @@ const EVIDENCE_STYLE: Record<string, { icon: IconName; tile: string }> = {
 
 const hasContact = Boolean(PROFILE.email || PROFILE.linkedin);
 
-/** A full-width band. Paper and wash bands keep the notebook's red margin rule. */
+/** A full-width band of colour with the page-width content inside. */
 function Band({
   tone = 'paper',
   id,
@@ -80,9 +80,6 @@ function Band({
   return (
     <section id={id} aria-label={label} className={`relative scroll-mt-0 ${bg}`}>
       <div className={`relative mx-auto max-w-6xl px-4 sm:px-6 ${className}`}>
-        {tone !== 'ink' && (
-          <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[calc(10rem+1.5rem)] hidden w-px bg-margin/40 md:block" />
-        )}
         {children}
       </div>
     </section>
@@ -216,7 +213,7 @@ export function HomePage() {
         <ol className="mt-6">
           {EXPERIENCE.map((role, i) => (
             <li key={`${role.title}-${role.dates}`}>
-              <Row as="div" className="py-6" margin={<p className="font-mono text-sm text-margin md:pt-3">{role.dates}</p>}>
+              <Row as="div" className="py-6" margin={<p className="font-mono text-sm text-margin">{role.dates}</p>}>
                 <div className="relative flex gap-5">
                   {i < EXPERIENCE.length - 1 && (
                     <span aria-hidden="true" className="absolute top-16 -bottom-8 left-7 w-0.5 bg-rule" />

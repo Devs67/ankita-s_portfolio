@@ -5,12 +5,12 @@
   paper, ruled lines, blue-black ink, pencil graphite, the red margin rule.
 */
 @theme {
-  --color-paper: #fafbfd;
-  --color-rule: #d9e3f0;
+  --color-paper: #eaf0fa; /* soft indigo tint, after the block-print blue in her portrait */
+  --color-rule: #c8d4ea;
   --color-ink: #1e2b6f;
   --color-graphite: #4a5263;
-  --color-margin: #c63c34; /* darkened from pen red to keep small labels above 4.5:1 */
-  --color-wash: #eef2f9;
+  --color-margin: #b3342d; /* pen red, dark enough for small labels on paper and wash (≥4.8:1) */
+  --color-wash: #dde6f5;
 
   /* Sticker fills for the illustrations: highlighter, mint, sky, blush */
   --color-butter: #fbe7a6;

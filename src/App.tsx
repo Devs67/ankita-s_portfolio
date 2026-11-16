@@ -89,11 +89,7 @@ export default function App() {
           <HomePage />
         ) : (
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            {/* The notebook margin rule, at the boundary of the 10rem margin column */}
-            <div className="relative">
-              <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-40 hidden w-px bg-margin/45 md:block" />
-              <Page path={path} />
-            </div>
+            <Page path={path} />
           </div>
         )}
       </main>

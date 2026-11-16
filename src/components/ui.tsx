@@ -34,10 +34,7 @@ export function MarginNote({ children }: { children: React.ReactNode }) {
   return <p className="font-mono text-[0.8125rem] leading-snug text-margin">{children}</p>;
 }
 
-/**
- * Two-column notebook row: a narrow margin column (labels, dates) and the page.
- * The red margin rule itself is drawn once by the page wrapper at the column boundary.
- */
+/** A block with an optional small label (section name, date) sitting above its content. */
 export function Row({
   margin,
   children,
@@ -52,9 +49,9 @@ export function Row({
   as?: 'section' | 'article' | 'div';
 }) {
   return (
-    <Tag id={id} className={`grid md:grid-cols-[10rem_1fr] scroll-mt-6 ${className}`}>
-      <div className="mb-3 md:mb-0 md:pr-6 md:text-right">{margin}</div>
-      <div className="min-w-0 md:pl-10">{children}</div>
+    <Tag id={id} className={`scroll-mt-6 ${className}`}>
+      {margin && <div className="mb-3">{margin}</div>}
+      <div className="min-w-0">{children}</div>
     </Tag>
   );
 }
