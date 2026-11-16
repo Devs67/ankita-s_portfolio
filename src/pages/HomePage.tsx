@@ -76,7 +76,7 @@ function Band({
   children: React.ReactNode;
   label?: string;
 }) {
-  const bg = { paper: '', wash: 'bg-wash', grid: 'grid-paper', ink: 'bg-ink text-paper/80' }[tone];
+  const bg = { paper: '', wash: 'bg-wash/55', grid: 'grid-paper', ink: 'bg-ink text-paper/80' }[tone];
   return (
     <section id={id} aria-label={label} className={`relative scroll-mt-0 ${bg}`}>
       <div className={`relative mx-auto max-w-6xl px-4 sm:px-6 ${className}`}>

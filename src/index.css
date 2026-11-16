@@ -61,7 +61,7 @@
 
 /* Graph-paper grid for the light bands */
 .grid-paper {
-  background-color: var(--color-wash);
+  background-color: color-mix(in srgb, var(--color-wash) 55%, transparent);
   background-image:
     linear-gradient(var(--color-rule) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-rule) 1px, transparent 1px);
@@ -69,6 +69,56 @@
   background-position: -1px -1px;
 }
 
+/*
+  Flowing background: four soft colour blobs drift and change shape behind the page.
+  Only transform and border-radius animate, so it stays smooth and cheap.
+*/
+.fluid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.fluid span {
+  position: absolute;
+  width: 52vmax;
+  height: 52vmax;
+  opacity: 0.6;
+  filter: blur(48px);
+  border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+  will-change: transform, border-radius;
+  animation: flow-a 34s ease-in-out infinite alternate, morph 18s ease-in-out infinite alternate;
+}
+/* A touch stronger than the sticker fills so the movement reads; red labels stay above 4.5:1 over them */
+.fluid span:nth-child(1) { background: #c3d3f7; top: -18vmax; left: -12vmax; }
+.fluid span:nth-child(2) { background: #c4ebdf; top: 20vh;    right: -20vmax; animation-name: flow-b, morph; animation-duration: 40s, 22s; }
+.fluid span:nth-child(3) { background: #f6cdc5; bottom: -24vmax; left: 10vw; opacity: 0.5; animation-name: flow-c, morph; animation-duration: 46s, 20s; }
+.fluid span:nth-child(4) { background: #fae3a0; top: 30vh;  left: 30vw;  width: 34vmax; height: 34vmax; opacity: 0.45; animation-name: flow-b, morph; animation-duration: 38s, 16s; animation-direction: alternate-reverse; }
+
+@keyframes flow-a {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50%  { transform: translate(18vw, 12vh) rotate(120deg) scale(1.12); }
+  100% { transform: translate(6vw, 30vh) rotate(220deg) scale(0.92); }
+}
+@keyframes flow-b {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50%  { transform: translate(-22vw, 16vh) rotate(-140deg) scale(0.9); }
+  100% { transform: translate(-8vw, -14vh) rotate(-240deg) scale(1.15); }
+}
+@keyframes flow-c {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1.05); }
+  50%  { transform: translate(24vw, -20vh) rotate(160deg) scale(0.9); }
+  100% { transform: translate(-10vw, -8vh) rotate(260deg) scale(1.1); }
+}
+@keyframes morph {
+  0%   { border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; }
+  33%  { border-radius: 63% 37% 41% 59% / 52% 63% 37% 48%; }
+  66%  { border-radius: 36% 64% 57% 43% / 63% 38% 62% 37%; }
+  100% { border-radius: 55% 45% 34% 66% / 39% 58% 42% 61%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .fluid span { animation: none; }
 }

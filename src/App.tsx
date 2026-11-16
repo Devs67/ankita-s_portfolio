@@ -53,11 +53,17 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <div aria-hidden="true" className="fluid">
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink focus:px-3 focus:py-2 focus:text-paper">
         Skip to content
       </a>
 
-      <header className="border-b border-rule bg-paper">
+      <header className="border-b border-rule bg-paper/60 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:px-6">
           <a href={href()} className="group flex items-baseline gap-3">
             <span className="font-display text-2xl text-ink">{PROFILE.name}</span>
