@@ -119,6 +119,24 @@ export function HomePage() {
                 I observe what sets a behaviour off, write support plans with teachers and parents, and teach children the skills
                 that work better — currently at {SCHOOL_LABEL}.
               </p>
+              {/* Her degree and how long she has worked in the field */}
+              <dl className="mt-7 grid max-w-2xl gap-5 sm:grid-cols-2">
+                <div className="border-l-2 border-margin pl-4">
+                  <dt className="font-mono text-xs uppercase tracking-wider text-margin">Qualification</dt>
+                  <dd className="mt-1">
+                    <span className="font-display text-xl text-ink">{EDUCATION[0].degree}</span>
+                    <span className="block text-[0.9375rem]">
+                      {EDUCATION[0].place}, {EDUCATION[0].year}
+                    </span>
+                  </dd>
+                </div>
+                <div className="border-l-2 border-margin pl-4">
+                  <dt className="font-mono text-xs uppercase tracking-wider text-margin">Experience</dt>
+                  <dd className="mt-1 text-[0.9375rem]">
+                    <span className="font-display text-xl text-ink">{PROFILE.fieldYears}</span> {PROFILE.fieldSummary}
+                  </dd>
+                </div>
+              </dl>
               <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <a href={href('evidence')} className="rounded-full bg-ink px-5 py-2.5 font-semibold text-paper transition-colors hover:bg-ink/90">
                   See the evidence

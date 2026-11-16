@@ -7,6 +7,12 @@ export const PROFILE = {
   firstName: 'Ankita',
   role: 'Behavioural Therapist',
   credentials: 'MA Applied Psychology, University of Calcutta',
+  /**
+   * Hands-on years in this field, from the resume: Jul 2024 – Apr 2025, May – Sep 2025 and Jan 2026 – now
+   * (about 2 years 2 months by Nov 2026). The 2021–24 jobs were outside psychology and are not counted.
+   */
+  fieldYears: '2+ years',
+  fieldSummary: 'of hands-on behaviour support with children, in ABA therapy and in school, after clinical internships in 2020–21.',
   programmes: 'Early Years, PYP and MYP',
   school: 'The Shri Ram Academy, Hyderabad',
   location: 'Hyderabad, India',
@@ -49,7 +55,7 @@ export const EXPERIENCE: Role[] = [
     kind: 'school',
     title: 'Behavioural Therapist',
     org: 'The Shri Ram Academy, Hyderabad',
-    dates: 'Jan 2025 – now',
+    dates: 'Jan 2026 – now',
     points: [
       '1:1 and small-group behavioural support for PYP and MYP students — behavioural, emotional and social needs.',
       'Design and run behaviour intervention plans (BIPs), tracking progress through structured data collection and regular review.',
