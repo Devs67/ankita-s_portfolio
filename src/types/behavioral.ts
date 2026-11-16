@@ -109,11 +109,3 @@ export interface BIPPlan {
   reinforcementSchedule: string;
   reviewDate: string;
 }
-
-export interface TherapistProfile {
-  name: string;
-  credentials?: string;
-  roleTitle: string;
-  department: string;
-  schoolName: string;
-}

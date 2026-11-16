@@ -1,1 +1,71 @@
 @import "tailwindcss";
+
+/*
+  Palette from a school observation notebook:
+  paper, ruled lines, blue-black ink, pencil graphite, the red margin rule.
+*/
+@theme {
+  --color-paper: #fafbfd;
+  --color-rule: #d9e3f0;
+  --color-ink: #1e2b6f;
+  --color-graphite: #4a5263;
+  --color-margin: #c63c34; /* darkened from pen red to keep small labels above 4.5:1 */
+  --color-wash: #eef2f9;
+
+  --font-display: "Young Serif", Georgia, serif;
+  --font-sans: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper text-graphite font-sans antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    @apply font-display text-ink;
+    font-weight: 400;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  ::selection {
+    background: var(--color-rule);
+    color: var(--color-ink);
+  }
+}
+
+/* The circled A / B / C, drawn like a pen circling a letter */
+.pen-circle circle {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 0;
+}
+.pen-circle.draw circle {
+  animation: pen-draw 0.7s cubic-bezier(0.6, 0, 0.3, 1) both;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes pen-draw {
+  from { stroke-dashoffset: 120; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Contents-page dotted leaders */
+.leader {
+  flex: 1;
+  min-width: 1.5rem;
+  border-bottom: 2px dotted var(--color-rule);
+  transform: translateY(-0.35em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pen-circle.draw circle { animation: none; }
+}

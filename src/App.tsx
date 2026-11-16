@@ -1,281 +1,102 @@
-import React, { useState, useEffect } from 'react';
-import { Navbar, ActiveTab } from './components/Navbar';
-import { PortfolioOverview } from './components/PortfolioOverview';
-import { ABCRegistry } from './components/ABCRegistry';
-import { CaseStudiesView } from './components/CaseStudiesView';
-import { BehaviorCategoriesView } from './components/BehaviorCategoriesView';
-import { AbbreviationsCodex } from './components/AbbreviationsCodex';
-import { BIPArchitect } from './components/BIPArchitect';
-import { AbbreviationDrawer } from './components/AbbreviationDrawer';
-import { AddABCModal } from './components/AddABCModal';
-import { PrintSummaryModal } from './components/PrintSummaryModal';
-import { EditProfileModal } from './components/EditProfileModal';
-import { WordDocumentUploadModal } from './components/WordDocumentUploadModal';
-import { ABCEntry, CaseStudy, Abbreviation, TherapistProfile } from './types/behavioral';
-import { 
-  INITIAL_ABC_LOGS, 
-  INITIAL_CASE_STUDIES, 
-  INITIAL_ABBREVIATIONS 
-} from './data/behavioralData';
-import { GraduationCap, ShieldCheck, Bookmark, Heart } from 'lucide-react';
+import { useEffect } from 'react';
+import { href, useRoute } from './router';
+import { PROFILE } from './content/profile';
+import { HomePage, hasContact } from './pages/HomePage';
+import { ObservationsPage } from './pages/ObservationsPage';
+import { CaseStudiesPage } from './pages/CaseStudiesPage';
+import { SupportPlansPage } from './pages/SupportPlansPage';
+import { BehaviourAreasPage } from './pages/BehaviourAreasPage';
+import { GlossaryPage } from './pages/GlossaryPage';
 
-const STORAGE_KEY_ABC = 'apex_clinical_abc_logs_v1';
-const STORAGE_KEY_PROFILE = 'apex_therapist_profile_v2';
+const HOME_SECTIONS = ['about', 'method', 'evidence', 'contact'];
 
-const DEFAULT_PROFILE: TherapistProfile = {
-  name: 'Behavioural Therapist',
-  credentials: '',
-  roleTitle: 'Behavioural Therapist',
-  department: 'Inclusion & Student Support Services',
-  schoolName: 'International Baccalaureate World School'
-};
+const NAV = [
+  ['About', 'about'],
+  ['Method', 'method'],
+  ['Evidence', 'evidence'],
+  ...(hasContact ? [['Contact', 'contact']] : []),
+];
+
+function Page({ path }: { path: string[] }) {
+  const [first, second, third] = path;
+  if (first === 'evidence' && second) {
+    switch (second) {
+      case 'observations':
+        return <ObservationsPage />;
+      case 'case-studies':
+        return <CaseStudiesPage caseId={third} />;
+      case 'support-plans':
+        return <SupportPlansPage />;
+      case 'behaviour-areas':
+        return <BehaviourAreasPage />;
+      case 'glossary':
+        return <GlossaryPage />;
+    }
+  }
+  return <HomePage />;
+}
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('overview');
+  const path = useRoute();
+  const key = path.join('/');
 
-  // Therapist identity profile
-  const [therapistProfile, setTherapistProfile] = useState<TherapistProfile>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY_PROFILE);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed && typeof parsed.name === 'string') {
-          return parsed;
-        }
-      }
-    } catch {
-      // fallback
-    }
-    return DEFAULT_PROFILE;
-  });
-
-  // Load from localStorage or seed
-  const [abcLogs, setAbcLogs] = useState<ABCEntry[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY_ABC);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
-        }
-      }
-    } catch {
-      // fallback to initial
-    }
-    return INITIAL_ABC_LOGS;
-  });
-
-  const [caseStudies] = useState<CaseStudy[]>(INITIAL_CASE_STUDIES);
-  const [abbreviations] = useState<Abbreviation[]>(INITIAL_ABBREVIATIONS);
-
-  // Modals & Drawers state
-  const [isGlossaryOpen, setIsGlossaryOpen] = useState(false);
-  const [selectedAcronym, setSelectedAcronym] = useState<string | null>(null);
-  const [isAddABCModalOpen, setIsAddABCModalOpen] = useState(false);
-  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
-  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
-  const [isWordUploadOpen, setIsWordUploadOpen] = useState(false);
-  const [printLogs, setPrintLogs] = useState<ABCEntry[]>(abcLogs);
-
-  // Sync profile to localStorage
+  // Section links (#/about) scroll within the home page; every other route starts at the top.
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(therapistProfile));
-    } catch (e) {
-      console.error('Failed to sync profile to localStorage', e);
-    }
-  }, [therapistProfile]);
+    const section = path.length === 1 && HOME_SECTIONS.includes(path[0]) ? path[0] : null;
+    if (section) document.getElementById(section)?.scrollIntoView();
+    else window.scrollTo(0, 0);
+  }, [key]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Sync logs to localStorage
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY_ABC, JSON.stringify(abcLogs));
-    } catch (e) {
-      console.error('Failed to sync to localStorage', e);
-    }
-  }, [abcLogs]);
-
-  const handleOpenGlossary = (acronym?: string) => {
-    setSelectedAcronym(acronym || null);
-    setIsGlossaryOpen(true);
-  };
-
-  const handleAddABC = (newEntry: ABCEntry) => {
-    setAbcLogs((prev) => [newEntry, ...prev]);
-  };
-
-  const handleImportLogs = (imported: ABCEntry[]) => {
-    setAbcLogs((prev) => [...imported, ...prev]);
-  };
-
-  const handleOpenPrintSummary = (logsToPrint: ABCEntry[]) => {
-    setPrintLogs(logsToPrint);
-    setIsPrintModalOpen(true);
-  };
-
-  const handleNavigateToABCWithFilter = (_categoryOrQuery: string) => {
-    setActiveTab('abc-registry');
-  };
+  const activeTop = path[0] ?? '';
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-teal-700 selection:text-white">
-      {/* Sticky Primary Header & Nav */}
-      <Navbar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onOpenGlossary={handleOpenGlossary}
-        onOpenNewABC={() => setIsAddABCModalOpen(true)}
-        onOpenWordUpload={() => setIsWordUploadOpen(true)}
-        profile={therapistProfile}
-        onOpenEditProfile={() => setIsEditProfileOpen(true)}
-      />
+    <div className="flex min-h-screen flex-col">
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink focus:px-3 focus:py-2 focus:text-paper">
+        Skip to content
+      </a>
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
-        {activeTab === 'overview' && (
-          <PortfolioOverview
-            onNavigate={setActiveTab}
-            onOpenGlossary={handleOpenGlossary}
-            onOpenNewABC={() => setIsAddABCModalOpen(true)}
-            onOpenWordUpload={() => setIsWordUploadOpen(true)}
-            totalAbcCount={abcLogs.length}
-            logs={abcLogs}
-            profile={therapistProfile}
-            onOpenEditProfile={() => setIsEditProfileOpen(true)}
-          />
-        )}
+      <header className="border-b border-rule">
+        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:px-6">
+          <a href={href()} className="group flex items-baseline gap-3">
+            <span className="font-display text-2xl text-ink">{PROFILE.name}</span>
+            <span className="font-mono text-[0.8125rem] text-graphite">{PROFILE.role}</span>
+          </a>
+          <nav aria-label="Main">
+            <ul className="flex flex-wrap gap-x-6 gap-y-1">
+              {NAV.map(([label, id]) => (
+                <li key={id}>
+                  <a
+                    href={href(id)}
+                    aria-current={activeTop === id ? 'page' : undefined}
+                    className={`text-[0.9375rem] underline-offset-[6px] hover:text-ink hover:underline hover:decoration-rule hover:decoration-2 ${
+                      activeTop === id ? 'text-ink underline decoration-margin decoration-2' : ''
+                    }`}
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </header>
 
-        {activeTab === 'abc-registry' && (
-          <ABCRegistry
-            logs={abcLogs}
-            onOpenNewABC={() => setIsAddABCModalOpen(true)}
-            onOpenWordUpload={() => setIsWordUploadOpen(true)}
-            onOpenGlossary={handleOpenGlossary}
-            onOpenPrintSummary={handleOpenPrintSummary}
-          />
-        )}
-
-        {activeTab === 'cases' && (
-          <CaseStudiesView
-            caseStudies={caseStudies}
-            onOpenGlossary={handleOpenGlossary}
-            onSelectCategory={handleNavigateToABCWithFilter}
-          />
-        )}
-
-        {activeTab === 'categories' && (
-          <BehaviorCategoriesView
-            onNavigateToABCWithFilter={handleNavigateToABCWithFilter}
-            onOpenGlossary={handleOpenGlossary}
-          />
-        )}
-
-        {activeTab === 'codex' && (
-          <AbbreviationsCodex
-            abbreviations={abbreviations}
-          />
-        )}
-
-        {activeTab === 'bip' && (
-          <BIPArchitect
-            onOpenGlossary={handleOpenGlossary}
-            profile={therapistProfile}
-          />
-        )}
+      <main id="main" className="flex-1">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          {/* The notebook margin rule, at the boundary of the 10rem margin column */}
+          <div className="relative">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-40 hidden w-px bg-margin/45 md:block" />
+            <Page path={path} />
+          </div>
+        </div>
       </main>
 
-      {/* Quick Access Abbreviation Drawer */}
-      <AbbreviationDrawer
-        isOpen={isGlossaryOpen}
-        onClose={() => setIsGlossaryOpen(false)}
-        abbreviations={abbreviations}
-        selectedAcronym={selectedAcronym}
-      />
-
-      {/* Add New ABC Observation Modal */}
-      <AddABCModal
-        isOpen={isAddABCModalOpen}
-        onClose={() => setIsAddABCModalOpen(false)}
-        onAdd={handleAddABC}
-      />
-
-      {/* Word / Text Document Import Modal */}
-      <WordDocumentUploadModal
-        isOpen={isWordUploadOpen}
-        onClose={() => setIsWordUploadOpen(false)}
-        onImportLogs={handleImportLogs}
-      />
-
-      {/* Print Clinical MDT Summary Modal */}
-      <PrintSummaryModal
-        isOpen={isPrintModalOpen}
-        onClose={() => setIsPrintModalOpen(false)}
-        logs={printLogs}
-        profile={therapistProfile}
-      />
-
-      {/* Edit Profile & Credentials Modal */}
-      <EditProfileModal
-        isOpen={isEditProfileOpen}
-        onClose={() => setIsEditProfileOpen(false)}
-        profile={therapistProfile}
-        onSave={setTherapistProfile}
-      />
-
-      {/* Clean Editorial Footer */}
-      <footer className="bg-white border-t border-slate-200 mt-auto py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-slate-800">
-                {therapistProfile.name}{therapistProfile.credentials ? ` · ${therapistProfile.credentials}` : ''}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span>{therapistProfile.roleTitle} · {therapistProfile.schoolName}</span>
-              <button
-                onClick={() => setIsEditProfileOpen(true)}
-                className="text-teal-700 hover:underline ml-1"
-              >
-                (Edit)
-              </button>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4">
-              <button
-                onClick={() => handleOpenGlossary('ABC')}
-                className="hover:text-slate-800 transition-colors"
-              >
-                ABC Matrix
-              </button>
-              <button
-                onClick={() => handleOpenGlossary('FBA')}
-                className="hover:text-slate-800 transition-colors"
-              >
-                FBA Protocols
-              </button>
-              <button
-                onClick={() => handleOpenGlossary('BIP')}
-                className="hover:text-slate-800 transition-colors"
-              >
-                BIP Standards
-              </button>
-              <button
-                onClick={() => handleOpenGlossary('ATL')}
-                className="hover:text-slate-800 transition-colors"
-              >
-                IB ATL Skills
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400">
-            <p>
-              Adheres strictly to the BACB Ethics Code for Behavior Analysts &amp; International Baccalaureate Inclusive Education Guidelines. All student profiles de-identified.
-            </p>
-            <p>
-              &copy; {new Date().getFullYear()} Clinical Behavioral Consultation Portfolio.
-            </p>
-          </div>
+      <footer className="border-t border-rule">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm sm:flex-row sm:justify-between sm:px-6">
+          <p>
+            <span className="text-ink">{PROFILE.name}</span> · {PROFILE.role}
+          </p>
+          <p>Student details on this site are de-identified.</p>
         </div>
       </footer>
     </div>

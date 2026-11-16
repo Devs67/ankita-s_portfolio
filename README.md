@@ -1,8 +1,14 @@
 # Behavioural Therapy Portfolio
 
-Portfolio site for a Behavioural Therapist working in an International Baccalaureate (IB) school: ABC (Antecedent-Behaviour-Consequence) observation log with trend charts, case studies, behaviour categories, an ABA/IB abbreviations glossary, and a behaviour intervention plan (BIP) builder.
+Portfolio site for a Behavioural Therapist working in an International Baccalaureate (IB) school. The home page covers who she is and how she works; the Evidence section holds read-only observation records (ABC format), case studies, behaviour support plans, behaviour areas and a glossary.
 
-Built with React, Vite, Tailwind CSS and Recharts. There is no backend: any observations entered on the site are saved only in that visitor's browser (`localStorage`).
+Built with React, Vite and Tailwind CSS. Static site, no backend.
+
+## Editing content
+
+- Name, credentials, school, experience, email and LinkedIn: `src/content/profile.ts`. Empty fields are hidden.
+- Observation records, case studies, support plans, glossary: `src/data/behavioralData.ts`.
+- Behaviour areas: `src/data/behaviourAreas.ts`.
 
 ## Run locally
 

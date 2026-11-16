@@ -812,3 +812,108 @@ export const INITIAL_BIP_TEMPLATE: BIPPlan = {
   reinforcementSchedule: 'Differential Reinforcement of Alternative Behavior (DRA): 1 token awarded for every 8 minutes of sustained task engagement without disruption. 4 tokens = 10 minutes of preferred MakerSpace inquiry.',
   reviewDate: '2026-12-01'
 };
+
+export const SUPPORT_PLANS: BIPPlan[] = [
+  INITIAL_BIP_TEMPLATE,
+  {
+    id: 'bip-myp-702',
+    studentCode: 'Student K (MYP Grade 7)',
+    programme: 'MYP',
+    targetBehavior: 'Physical Aggression & Apparatus Hoarding in Sciences',
+    operationalDefinition: 'Placing hands on peer belongings, shouting "Touch this and you will regret it", slamming beakers or blocking station with torso.',
+    functionOfBehavior: 'Access to Tangible',
+    preventiveStrategies: [
+      'Pre-assigned structured lab roles: "Investigator A / Data Logger / Timekeeper".',
+      'Visual 3-minute sand timers on lab counter for station rotation.',
+      'Non-contingent access to high-interest design tools prior to collaborative blocks.'
+    ],
+    teachingStrategies: [
+      'Scripted request training: "I need 2 more minutes to finish this measurement, then you have the station."',
+      'ATL Social Skills: Perspective taking and collaborative dialogue rubrics.'
+    ],
+    reactiveStrategies: [
+      'Differential Reinforcement of Incompatible Behavior (DRI): Hands flat on clipboard during peer turn.',
+      'Tangible extinction: Apparatus removed until 3 minutes of calm cooperation is displayed.'
+    ],
+    crisisEscalationLevels: [
+      {
+        level: 'Green (Baseline)',
+        behaviorIndicators: 'Collaborating calmly, recording observations on shared tablet, hands on personal tools.',
+        adultResponse: 'Deliver verbal praise every 5 minutes; award criterion engagement bonus points.'
+      },
+      {
+        level: 'Yellow (Agitation / Rumbling)',
+        behaviorIndicators: 'Rapid breathing, clutching apparatus tightly with both hands, ignoring peer requests to share.',
+        adultResponse: 'Prompt visual turn-taking card; remind of remaining timer countdown; offer neutral choice.'
+      },
+      {
+        level: 'Orange (Escalation / Outburst)',
+        behaviorIndicators: 'Shouting at peer, slamming beakers onto workbench, blocking access with physical stance.',
+        adultResponse: 'Step between students with neutral open stance. Direct peer to alternate workbench safely. Low-arousal voice.'
+      },
+      {
+        level: 'Red (Crisis)',
+        behaviorIndicators: 'Throwing glassware or threatening physical violence with lab instruments.',
+        adultResponse: 'Evacuate lab workbench perimeter immediately. Do not physically engage unless immediate danger. Summon therapist.'
+      },
+      {
+        level: 'Blue (De-escalation & Recovery)',
+        behaviorIndicators: 'Hands open, sitting down, lower vocal pitch, responsive to simple redirection.',
+        adultResponse: 'Allow 10 minutes quiet breathing; provide cool water; conduct restorative clean-up once fully regulated.'
+      }
+    ],
+    reinforcementSchedule: 'DRI: 1 token for each 5-minute interval hands remain on personal clipboard while peer operates apparatus. 3 tokens = 10 min preferred CAD design.',
+    reviewDate: '2026-11-28'
+  },
+  {
+    id: 'bip-dp-1103',
+    studentCode: 'Student S (DP Grade 11)',
+    programme: 'DP',
+    targetBehavior: 'Assessment Panic & Examination Elopement',
+    operationalDefinition: 'Hyperventilating, vocalizing panic, crumpling exam answer sheets, and exiting testing room without authorization.',
+    functionOfBehavior: 'Escape/Avoidance',
+    preventiveStrategies: [
+      'Official IB Inclusive Assessment accommodation: Separate distraction-free room & 10 min/hr stop-the-clock rest breaks.',
+      'Graduated exposure hierarchies with timed practice tests.',
+      'Silent digital countdown timer replacing ticking wall clocks.'
+    ],
+    teachingStrategies: [
+      'Acceptance & Commitment Training (ACT) cognitive defusion: "I am having the thought that I will fail, but I can still write question 1".',
+      'Somatic 5-4-3-2-1 grounding protocol.',
+      'Silent "Pause Card" placed on desk to alert invigilator without verbal speech.'
+    ],
+    reactiveStrategies: [
+      'Low-arousal escort to quiet annex without lecture or academic cajoling.',
+      'Stop-the-clock timer engaged; assessment never cancelled, only paused until physiological regulation is restored.'
+    ],
+    crisisEscalationLevels: [
+      {
+        level: 'Green (Baseline)',
+        behaviorIndicators: 'Focused on exam paper, utilizing margin scratch notes, steady breathing.',
+        adultResponse: 'Maintain silent, non-intrusive monitoring; ensure water bottle is filled.'
+      },
+      {
+        level: 'Yellow (Agitation / Rumbling)',
+        behaviorIndicators: 'Rapid pencil tapping, tears welling in eyes, heavy sighing, staring blankly at single problem for > 6 minutes.',
+        adultResponse: 'Quietly point to somatic grounding card on desk; tap stop-the-clock timer offering a 3-minute pause.'
+      },
+      {
+        level: 'Orange (Escalation / Outburst)',
+        behaviorIndicators: 'Crying aloud, crumpling answer booklet, pushing chair back to stand and flee.',
+        adultResponse: 'Softly prompt: "Pause card active. Step with me to the quiet corridor." Walk at student\'s pace.'
+      },
+      {
+        level: 'Red (Crisis)',
+        behaviorIndicators: 'Full panic attack, severe hyperventilation, inability to stand, numbness in fingers.',
+        adultResponse: 'Guide student to sit against wall; guide slow 4-7-8 breathing; notify school nurse and therapist.'
+      },
+      {
+        level: 'Blue (De-escalation & Recovery)',
+        behaviorIndicators: 'Respiratory rate returns to baseline, tears subside, acknowledges invigilator presence.',
+        adultResponse: 'Offer cold water; review question 1 collaboratively to rebuild momentum; restart exam clock.'
+      }
+    ],
+    reinforcementSchedule: 'Self-monitoring: Checking off each completed question section with 2 minutes of silent eye rest.',
+    reviewDate: '2026-12-15'
+  }
+];
