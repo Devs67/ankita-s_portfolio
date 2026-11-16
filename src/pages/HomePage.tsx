@@ -1,25 +1,7 @@
-import { CircledLetter, MarginNote, Row } from '../components/ui';
+import { MarginNote, Row } from '../components/ui';
 import { EDUCATION, EXPERIENCE, EXPERTISE, OTHER_WORK, PROFILE, SCHOOL_LABEL } from '../content/profile';
 import { href } from '../router';
 import { EVIDENCE_INDEX } from '../content/evidenceIndex';
-
-const HERO_LINES = [
-  {
-    letter: 'A',
-    term: 'antecedent',
-    text: 'The room gets loud. The task is open-ended. The plan changes without warning.',
-  },
-  {
-    letter: 'B',
-    term: 'behaviour',
-    text: 'A child pulls at their hair, runs for the corridor, or puts their head down.',
-  },
-  {
-    letter: 'C',
-    term: 'consequence',
-    text: 'What the adults do next decides what the child learns. That’s where I work.',
-  },
-];
 
 const METHOD = [
   {
@@ -61,41 +43,23 @@ export function HomePage() {
 
   return (
     <>
-      {/* Hero: the practice, written as an ABC record */}
-      <section aria-labelledby="hero-title" className="pt-14 pb-16 sm:pt-20 sm:pb-24">
-        <Row margin={<MarginNote>Date: {new Date().toLocaleDateString('en-GB')}</MarginNote>}>
-          <p className="font-mono text-sm text-graphite">
-            {PROFILE.name} · {PROFILE.role} · {PROFILE.location}
-          </p>
-          <h1 id="hero-title" className="sr-only">
-            {PROFILE.name}, {PROFILE.role}
+      {/* Hero: who she is and what she does */}
+      <section aria-labelledby="hero-title" className="pt-14 pb-16 sm:pt-20 sm:pb-20">
+        <Row margin={<MarginNote>{PROFILE.location}</MarginNote>}>
+          <h1 id="hero-title" className="text-[2.75rem] leading-[1.05] sm:text-7xl">
+            {PROFILE.name}
           </h1>
-        </Row>
-
-        <ol className="mt-6">
-          {HERO_LINES.map((line, i) => (
-            <li key={line.letter}>
-              <Row
-                as="div"
-                className="max-md:mt-6"
-                margin={
-                  <div className="flex items-center gap-3 md:justify-end md:pt-2">
-                    <CircledLetter letter={line.letter} draw delay={0.25 + i * 0.35} className="h-10 w-10 sm:h-12 sm:w-12 md:order-last" />
-                    <span className="font-mono text-xs text-margin">{line.term}</span>
-                  </div>
-                }
-              >
-                <p className="border-b border-rule pb-4 pt-1 font-display text-[1.6rem] leading-snug text-ink sm:pt-3 sm:text-[2.35rem] sm:leading-[1.25]">
-                  <span className="sr-only">{line.term}: </span>
-                  {line.text}
-                </p>
-              </Row>
-            </li>
-          ))}
-        </ol>
-
-        <Row className="mt-10">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <p className="mt-3 font-mono text-sm">
+            {PROFILE.role} · {PROFILE.programmes}
+          </p>
+          <p className="mt-8 max-w-3xl font-display text-[1.6rem] leading-snug text-ink sm:text-[2.1rem] sm:leading-[1.3]">
+            I help children from the early years to middle school cope, learn and belong in the mainstream classroom.
+          </p>
+          <p className="mt-5 max-w-2xl text-lg">
+            I observe what sets a behaviour off, write support plans with teachers and parents, and teach children the skills
+            that work better — currently at {SCHOOL_LABEL}.
+          </p>
+          <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
             <a
               href={href('evidence')}
               className="rounded-full bg-ink px-5 py-2.5 font-semibold text-paper transition-colors hover:bg-ink/90"
@@ -108,6 +72,23 @@ export function HomePage() {
           </div>
         </Row>
       </section>
+
+      {/* The idea the practice rests on */}
+      <Row
+        className="border-t border-rule py-14 sm:py-16"
+        margin={
+          <span aria-hidden="true" className="block font-display text-7xl leading-[0.8] text-margin">
+            “
+          </span>
+        }
+      >
+        <figure>
+          <blockquote className="font-display text-3xl leading-tight text-ink sm:text-5xl">Kids do well if they can.</blockquote>
+          <figcaption className="mt-4 font-mono text-sm">
+            Dr Ross W. Greene, child psychologist · author of <cite className="not-italic">The Explosive Child</cite>
+          </figcaption>
+        </figure>
+      </Row>
 
       {/* About */}
       <Row id="about" margin={<MarginNote>About</MarginNote>} className="border-t border-rule py-16">

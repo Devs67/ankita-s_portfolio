@@ -43,20 +43,6 @@
   }
 }
 
-/* The circled A / B / C, drawn like a pen circling a letter */
-.pen-circle circle {
-  stroke-dasharray: 120;
-  stroke-dashoffset: 0;
-}
-.pen-circle.draw circle {
-  animation: pen-draw 0.7s cubic-bezier(0.6, 0, 0.3, 1) both;
-  animation-delay: var(--delay, 0s);
-}
-@keyframes pen-draw {
-  from { stroke-dashoffset: 120; }
-  to { stroke-dashoffset: 0; }
-}
-
 /* Contents-page dotted leaders */
 .leader {
   flex: 1;
@@ -67,5 +53,4 @@
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .pen-circle.draw circle { animation: none; }
 }

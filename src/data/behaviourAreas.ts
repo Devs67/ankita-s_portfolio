@@ -127,34 +127,5 @@ export const BEHAVIOUR_AREAS: BehaviourArea[] = [
       'Differential Reinforcement of Zero Rates of Behavior (DRO) with token rewards'
     ],
     ibAtlLink: 'ATL Self-Management (Body Awareness & Physical Spatial Regulation)'
-  },
-  {
-    id: 'academic-anxiety',
-    title: 'High-Stakes IB Academic Anxiety & Perfectionism',
-    subtitle: 'DP Exam Panic, Somatic Avoidance & Assessment Catastrophizing',
-    clinicalTerms: 'Cognitive fusion with rigid failure schemas; establishing operations (EO) elevating panic avoidance to acute escape behaviors.',
-    contexts: [
-      'IB Diploma Mock Examinations and official May/November testing sessions',
-      'Theory of Knowledge (TOK) and Extended Essay (EE) submission deadlines',
-      'Public exhibition presentations (PYP Exhibition, MYP Personal Project)'
-    ],
-    triggers: [
-      'Invigilator announcements: "15 minutes remaining on Paper 2"',
-      'Receiving critical rubric feedback on formative assessment drafts',
-      'Facing complex, non-algorithmic Higher Level (HL) mathematics problems'
-    ],
-    looksLike: [
-      'Acute hyperventilation, crying, and somatic stomach complaints in testing rooms',
-      'Assessment elopement: Walking out of examination halls without authorization',
-      'Tearing answer booklets or deleting weeks of draft research out of despair'
-    ],
-    maintainingFunction: 'Primary: Escape from evaluative self-threat & task pressure',
-    strategies: [
-      'Official IB Cardiff Assessment Accommodations: "Stop-the-Clock" rest breaks & separate quiet room',
-      'Graduated Exposure Hierarchies (10-min, 25-min, 50-min timed conditions)',
-      'Acceptance & Commitment Training (ACT) cognitive defusion exercises',
-      'Silent visual break-card protocols for seamless invigilator communication'
-    ],
-    ibAtlLink: 'ATL Thinking Skills (Metacognition, Emotional Resilience & Cognitive Flexibility)'
   }
 ];

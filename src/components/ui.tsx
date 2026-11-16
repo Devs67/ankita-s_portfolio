@@ -2,24 +2,9 @@ import React from 'react';
 import { BehaviorFunction } from '../types/behavioral';
 
 /** A letter circled in margin-red pen, as in the handwritten ABC notes. */
-export function CircledLetter({
-  letter,
-  draw = false,
-  delay = 0,
-  className = 'w-9 h-9',
-}: {
-  letter: string;
-  draw?: boolean;
-  delay?: number;
-  className?: string;
-}) {
+export function CircledLetter({ letter, className = 'w-9 h-9' }: { letter: string; className?: string }) {
   return (
-    <svg
-      viewBox="0 0 40 40"
-      aria-hidden="true"
-      className={`pen-circle ${draw ? 'draw' : ''} shrink-0 ${className}`}
-      style={{ '--delay': `${delay}s` } as React.CSSProperties}
-    >
+    <svg viewBox="0 0 40 40" aria-hidden="true" className={`shrink-0 ${className}`}>
       <circle
         cx="20"
         cy="20"

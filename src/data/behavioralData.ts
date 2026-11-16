@@ -36,22 +36,6 @@ export const INITIAL_ABC_LOGS: ABCEntry[] = [
     notes: 'Maintaining reinforcer was immediate control over materials. Needs structured roles in IB collaborative inquiry.'
   },
   {
-    id: 'abc-103',
-    timestamp: '2026-10-15 13:45',
-    studentCode: 'Student C (DP Grade 11)',
-    programme: 'DP',
-    setting: 'Exam & Assessment Hall',
-    antecedent: 'Mock IB Diploma Mathematics Paper 2 invigilator called "15 minutes remaining, ensure all working is documented"',
-    behavior: 'Student experienced acute autonomic hyperarousal, began hyperventilating, tore two scratch sheets into fine strips, began weeping silently with head on desk',
-    consequence: 'Invigilator signaled behavioral therapist; student escorted to quiet sensory-decompression conference room',
-    perceivedFunction: 'Escape/Avoidance',
-    intensity: 'Severe / Crisis',
-    durationMinutes: 22,
-    replacementBehavior: 'Initiating 5-4-3-2-1 sensory grounding exercise and utilizing approved 5-minute stop-the-clock rest break accommodation',
-    consequenceInterventionApplied: 'Low-arousal verbal pacing, bilateral sensory squeeze ball, collaborative cognitive reframing of incomplete questions',
-    notes: 'Perfectionism-driven panic. High-stakes IB internal assessment pressure operating as an establishing operation (EO).'
-  },
-  {
     id: 'abc-104',
     timestamp: '2026-10-16 10:05',
     studentCode: 'Student D (PYP Early Years 2)',
@@ -115,22 +99,6 @@ export const INITIAL_ABC_LOGS: ABCEntry[] = [
     replacementBehavior: 'Texting/calling student support helper badge or asking neighboring teacher for master key pass without violence',
     consequenceInterventionApplied: 'Hallway monitor redirected to neutral stance; student guided to deep breathing; physical locker serviced with smooth latch',
     notes: 'Frustration intolerance combined with fear of being marked late (escape from tardy consequences).'
-  },
-  {
-    id: 'abc-108',
-    timestamp: '2026-10-18 10:30',
-    studentCode: 'Student H (DP Grade 12)',
-    programme: 'DP',
-    setting: 'Library & Quiet Study',
-    antecedent: 'Supervisor reminded student that Theory of Knowledge (TOK) essay draft was overdue by 48 hours',
-    behavior: 'Shut laptop lid violently, stated "I am dropping out of the IB Diploma, the whole programme is pretentious nonsense", walked out of library',
-    consequence: 'Librarian alerted Diploma Coordinator; coordinator held 45-minute crisis counseling session',
-    perceivedFunction: 'Escape/Avoidance',
-    intensity: 'Moderate',
-    durationMinutes: 30,
-    replacementBehavior: 'Breaking TOK knowledge question into three micro-deadlines with behavioral therapist check-in',
-    consequenceInterventionApplied: 'Acceptance & Commitment Training (ACT) defusion exercise; established contingent 20-minute drafting sprints followed by preferred walk',
-    notes: 'Perfectionism-driven cognitive fusion. High value placed on academic identity creating immense avoidance vulnerability.'
   },
   {
     id: 'abc-109',
@@ -289,51 +257,6 @@ export const INITIAL_CASE_STUDIES: CaseStudy[] = [
     clinicalTakeaways: [
       'In middle school lab environments, ambiguous group roles catalyze territory disputes. Explicit role structuring acts as a potent antecedent intervention.',
       'DRI (Differential Reinforcement of Incompatible Behavior) was dramatically more effective than punitive lab bans.'
-    ]
-  },
-  {
-    id: 'case-dp-1103',
-    title: 'Overcoming High-Stakes Exam Panic & Perfectionism Paralysis in IB Diploma Programme',
-    studentPseudonym: 'Student Sophia (Grade 11)',
-    programme: 'DP',
-    gradeBand: 'Diploma Programme (Ages 16-17)',
-    category: 'High-Stakes IB Academic Anxiety & Perfectionism',
-    primaryFunction: 'Escape/Avoidance',
-    ibLearnerProfileTarget: 'Balanced & Risk-Takers',
-    ibAtlFocus: 'Thinking Skills (Metacognition & Cognitive Flexibility)',
-    presentingSituation: 'Sophia is an academically high-achieving student enrolled in the rigorous IB Diploma Programme (Higher Level Biology, Chemistry, and Psychology). Facing impending mock examinations and internal assessment (IA) deadlines, Sophia developed severe panic attacks, characterized by hyperventilation, somatic stomach complaints, somatic fainting sensations, and complete exam room elopement. This resulted in zero completed assessments over a 3-week testing block.',
-    targetBehaviorOperationalDefinition: 'Assessment elopement & acute somatic panic: Defined as standing up during an examination, vocalizing inability to breathe, leaving the examination room without invigilator authorization, or crumpling examination answer booklets.',
-    fbaHypothesis: 'When presented with timed, high-stakes evaluative prompts accompanied by timer countdowns (SD), cognitive thoughts of perceived intellectual failure act as an establishing operation (EO), evoking acute sympathetic nervous system fight-or-flight responses. Eloping from the exam room provides immediate reduction in overwhelming panic (negative reinforcement: escape from perceived evaluative catastrophe).',
-    baselineData: {
-      frequencyPerWeek: 5,
-      durationAverageMin: 45,
-      intensity: 'Severe / Crisis'
-    },
-    interventionData: {
-      frequencyPerWeek: 0,
-      durationAverageMin: 0,
-      reductionPercentage: 100,
-      durationWeeks: 10
-    },
-    antecedentInterventions: [
-      'Official IB Assessment Accommodations: Formally secured "Stop-the-Clock" rest breaks (10 min/hour) and separate, distraction-free quiet room testing through IB Cardiff Inclusive Assessment arrangements.',
-      'Exposure Hierarchies: Graduated mock exams starting with 10-minute untimed practice, progressing to 25-minute, 50-minute, and full 90-minute timed conditions.',
-      'Environmental Alteration: Positioned desk adjacent to natural lighting; eliminated audible ticking wall clocks in favor of a silent digital countdown.'
-    ],
-    replacementBehaviorsFCT: [
-      'Acceptance & Commitment Training (ACT) Defusion: Practiced acknowledging "The Story of Not Being Good Enough" as mental events rather than literal truths.',
-      'Somatic Grounding Card: Laminated discreet index card outlining the 5-4-3-2-1 sensory method and progressive muscle relaxation to activate parasympathetic rebound.',
-      'Self-Advocacy Card: Quietly placed an "Official 5-Minute Pause" card on the invigilator corner without verbal drama.'
-    ],
-    consequenceExtinctionStrategies: [
-      'Gradual Re-entry Protocol: Elopement to the hallway was met with low-stimulation, silent accompaniment back to the quiet room; assessment was never cancelled, only paused with stop-the-clock timer.',
-      'De-emphasizing Point Totals: Post-assessment debriefs focused strictly on ATL process metrics (persistence, regulation) rather than raw numerical grades.'
-    ],
-    multidisciplinaryCollaboration: 'Coordinated with the IB Diploma Coordinator, School Psychologist, and External Clinical Psychiatrist to draft an inclusive education access passport. Hosted parent conferences to de-escalate parental academic pressure.',
-    clinicalTakeaways: [
-      'High school behavioral therapy in IB World Schools requires sophisticated clinical fluency with academic perfectionism and ACT principles.',
-      'Official IB Cardiff accommodation protocols are essential behavioral scaffolding for severe somatic panic.',
-      'Sophia completed all 6 formal DP exams in May with zero elopement episodes, earning 41 out of 45 IB points.'
     ]
   },
   {
@@ -638,7 +561,7 @@ export const INITIAL_ABBREVIATIONS: Abbreviation[] = [
     domain: 'IB Education',
     definition: 'A rigorous, pre-university 2-year educational programme for students aged 16 to 19 featuring 6 subjects, Extended Essay, TOK, and CAS.',
     clinicalApplication: 'Therapy focuses on high-stakes academic perfectionism, panic desensitization, time management, and official IB accommodations.',
-    exampleInSchool: 'Supporting Grade 11-12 students with stop-the-clock exam modifications and cognitive reframing.'
+    exampleInSchool: 'The programme students move into after the MYP, completing the IB continuum.'
   },
   {
     id: 'abbr-20',
@@ -666,24 +589,6 @@ export const INITIAL_ABBREVIATIONS: Abbreviation[] = [
     definition: 'An in-depth, multi-week conceptual learning exploration organized under transdisciplinary themes in the PYP.',
     clinicalApplication: 'Therapist modifies classroom environmental triggers during shifting UOI projects.',
     exampleInSchool: 'Supporting a student with ADHD during open-ended research on "Sharing the Planet".'
-  },
-  {
-    id: 'abbr-23',
-    acronym: 'TOK',
-    fullName: 'Theory of Knowledge',
-    domain: 'IB Education',
-    definition: 'A flagship core DP course where students reflect on the nature of knowledge, claims, and how we know what we know.',
-    clinicalApplication: 'Often a trigger for perfectionistic avoidance; therapist utilizes ACT and metacognitive pacing.',
-    exampleInSchool: 'Breaking the 1,600-word TOK exhibition into structured 15-minute behavioral work sprints.'
-  },
-  {
-    id: 'abbr-24',
-    acronym: 'CAS',
-    fullName: 'Creativity, Activity, Service',
-    domain: 'IB Education',
-    definition: 'A mandatory core component of the IB Diploma requiring real-world experiential learning outside the academic curriculum.',
-    clinicalApplication: 'Therapist assists students with social anxiety to find accommodating service learning placements.',
-    exampleInSchool: 'Supporting an autistic student in organizing an inclusive library book club for CAS.'
   },
   {
     id: 'abbr-25',
@@ -864,56 +769,5 @@ export const SUPPORT_PLANS: BIPPlan[] = [
     ],
     reinforcementSchedule: 'DRI: 1 token for each 5-minute interval hands remain on personal clipboard while peer operates apparatus. 3 tokens = 10 min preferred CAD design.',
     reviewDate: '2026-11-28'
-  },
-  {
-    id: 'bip-dp-1103',
-    studentCode: 'Student S (DP Grade 11)',
-    programme: 'DP',
-    targetBehavior: 'Assessment Panic & Examination Elopement',
-    operationalDefinition: 'Hyperventilating, vocalizing panic, crumpling exam answer sheets, and exiting testing room without authorization.',
-    functionOfBehavior: 'Escape/Avoidance',
-    preventiveStrategies: [
-      'Official IB Inclusive Assessment accommodation: Separate distraction-free room & 10 min/hr stop-the-clock rest breaks.',
-      'Graduated exposure hierarchies with timed practice tests.',
-      'Silent digital countdown timer replacing ticking wall clocks.'
-    ],
-    teachingStrategies: [
-      'Acceptance & Commitment Training (ACT) cognitive defusion: "I am having the thought that I will fail, but I can still write question 1".',
-      'Somatic 5-4-3-2-1 grounding protocol.',
-      'Silent "Pause Card" placed on desk to alert invigilator without verbal speech.'
-    ],
-    reactiveStrategies: [
-      'Low-arousal escort to quiet annex without lecture or academic cajoling.',
-      'Stop-the-clock timer engaged; assessment never cancelled, only paused until physiological regulation is restored.'
-    ],
-    crisisEscalationLevels: [
-      {
-        level: 'Green (Baseline)',
-        behaviorIndicators: 'Focused on exam paper, utilizing margin scratch notes, steady breathing.',
-        adultResponse: 'Maintain silent, non-intrusive monitoring; ensure water bottle is filled.'
-      },
-      {
-        level: 'Yellow (Agitation / Rumbling)',
-        behaviorIndicators: 'Rapid pencil tapping, tears welling in eyes, heavy sighing, staring blankly at single problem for > 6 minutes.',
-        adultResponse: 'Quietly point to somatic grounding card on desk; tap stop-the-clock timer offering a 3-minute pause.'
-      },
-      {
-        level: 'Orange (Escalation / Outburst)',
-        behaviorIndicators: 'Crying aloud, crumpling answer booklet, pushing chair back to stand and flee.',
-        adultResponse: 'Softly prompt: "Pause card active. Step with me to the quiet corridor." Walk at student\'s pace.'
-      },
-      {
-        level: 'Red (Crisis)',
-        behaviorIndicators: 'Full panic attack, severe hyperventilation, inability to stand, numbness in fingers.',
-        adultResponse: 'Guide student to sit against wall; guide slow 4-7-8 breathing; notify school nurse and therapist.'
-      },
-      {
-        level: 'Blue (De-escalation & Recovery)',
-        behaviorIndicators: 'Respiratory rate returns to baseline, tears subside, acknowledges invigilator presence.',
-        adultResponse: 'Offer cold water; review question 1 collaboratively to rebuild momentum; restart exam clock.'
-      }
-    ],
-    reinforcementSchedule: 'Self-monitoring: Checking off each completed question section with 2 minutes of silent eye rest.',
-    reviewDate: '2026-12-15'
   }
 ];
