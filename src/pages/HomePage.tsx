@@ -174,7 +174,7 @@ export function HomePage() {
         <SectionTitle label="About">Behaviour is communication. My job is to translate it.</SectionTitle>
         <Row>
           <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1fr_22rem] xl:grid-cols-[1fr_28rem] xl:gap-16">
-            <div className="max-w-2xl space-y-4 xl:max-w-4xl xl:text-lg">
+            <div className="max-w-2xl space-y-5 text-lg leading-relaxed sm:text-xl xl:max-w-4xl xl:text-[1.375rem]">
               <p>
                 I’m {PROFILE.firstName}, a psychology-trained {PROFILE.role.toLowerCase()} at {SCHOOL_LABEL}. I support students’
                 behavioural, emotional and learning needs across the {PROFILE.programmes} years — one-to-one, in small groups,
@@ -185,7 +185,7 @@ export function HomePage() {
                 follows. From those notes I work out what the behaviour is doing for the child, then plan with everyone around
                 them so the next time that moment comes round, it goes differently.
               </p>
-              <p className="font-mono text-sm text-ink">{PROFILE.credentials}</p>
+              <p className="font-mono text-base text-ink">{PROFILE.credentials}</p>
             </div>
             <figure className="mx-auto w-full max-w-[22rem] xl:max-w-[28rem]">
               <SupportCircle />
