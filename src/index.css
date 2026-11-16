@@ -12,7 +12,15 @@
   --color-margin: #c63c34; /* darkened from pen red to keep small labels above 4.5:1 */
   --color-wash: #eef2f9;
 
+  /* Sticker fills for the illustrations: highlighter, mint, sky, blush */
+  --color-butter: #fbe7a6;
+  --color-mint: #cdeee4;
+  --color-sky: #d6e1fb;
+  --color-blush: #f8d5cf;
+  --color-tape: #f1c75b;
+
   --font-display: "Young Serif", Georgia, serif;
+  --font-hand: "Kalam", "Comic Sans MS", cursive;
   --font-sans: "Atkinson Hyperlegible Next", system-ui, sans-serif;
   --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
 }
@@ -43,12 +51,22 @@
   }
 }
 
-/* Contents-page dotted leaders */
-.leader {
-  flex: 1;
-  min-width: 1.5rem;
-  border-bottom: 2px dotted var(--color-rule);
-  transform: translateY(-0.35em);
+/* Highlighter stroke behind a phrase */
+.highlight {
+  background: linear-gradient(transparent 58%, var(--color-butter) 58%, var(--color-butter) 92%, transparent 92%);
+  padding: 0 0.1em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Graph-paper grid for the light bands */
+.grid-paper {
+  background-color: var(--color-wash);
+  background-image:
+    linear-gradient(var(--color-rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-rule) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -49,6 +49,7 @@ export default function App() {
   }, [key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const activeTop = path[0] ?? '';
+  const isHome = !(path[0] === 'evidence' && path[1]);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -56,7 +57,7 @@ export default function App() {
         Skip to content
       </a>
 
-      <header className="border-b border-rule">
+      <header className="border-b border-rule bg-paper">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:px-6">
           <a href={href()} className="group flex items-baseline gap-3">
             <span className="font-display text-2xl text-ink">{PROFILE.name}</span>
@@ -83,13 +84,18 @@ export default function App() {
       </header>
 
       <main id="main" className="flex-1">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          {/* The notebook margin rule, at the boundary of the 10rem margin column */}
-          <div className="relative">
-            <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-40 hidden w-px bg-margin/45 md:block" />
-            <Page path={path} />
+        {isHome ? (
+          // The home page lays out its own full-width bands
+          <HomePage />
+        ) : (
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            {/* The notebook margin rule, at the boundary of the 10rem margin column */}
+            <div className="relative">
+              <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-40 hidden w-px bg-margin/45 md:block" />
+              <Page path={path} />
+            </div>
           </div>
-        </div>
+        )}
       </main>
 
       <footer className="border-t border-rule">

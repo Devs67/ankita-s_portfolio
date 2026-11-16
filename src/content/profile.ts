@@ -12,12 +12,31 @@ export const PROFILE = {
   location: 'Hyderabad, India',
   email: 'ankitadutta0105@gmail.com',
   /** Full profile URL, e.g. https://www.linkedin.com/in/... */
-  linkedin: '',
+  linkedin: 'https://www.linkedin.com/in/ankita-dutta-187a7a283',
 };
+
+/**
+ * The quote under the hero. Swap in any of these:
+ *   'Every kid needs a champion.'                 — Rita F. Pierson, educator · TED Talks Education, 2013
+ *   'Different, not less.'                        — Dr Temple Grandin, autism advocate and author
+ *   'The world needs all kinds of minds.'         — Dr Temple Grandin, autism advocate and author
+ *   'If you’ve met one person with autism, you’ve met one person with autism.' — Dr Stephen Shore, special educator
+ *   'A misbehaving child is a discouraged child.' — Rudolf Dreikurs, child psychiatrist and educator
+ */
+export const QUOTE = {
+  text: 'Every kid needs a champion.',
+  by: 'Rita F. Pierson',
+  note: 'educator · TED Talks Education, 2013',
+};
+
+/** Drop a portrait at public/ankita.jpg; until then a monogram shows in its place. */
+export const PHOTO = 'ankita.jpg';
 
 export const SCHOOL_LABEL = PROFILE.school || 'an International Baccalaureate school';
 
 export interface Role {
+  /** Picks the timeline icon */
+  kind: 'school' | 'aba' | 'clinical' | 'remote';
   title: string;
   org: string;
   dates: string;
@@ -27,6 +46,7 @@ export interface Role {
 /** School and clinical roles, newest first. */
 export const EXPERIENCE: Role[] = [
   {
+    kind: 'school',
     title: 'Behavioural Therapist',
     org: 'The Shri Ram Academy, Hyderabad',
     dates: 'Jan 2025 – now',
@@ -38,6 +58,7 @@ export const EXPERIENCE: Role[] = [
     ],
   },
   {
+    kind: 'aba',
     title: 'Senior Shadow Teacher',
     org: 'Early Autism Ventures, Hyderabad',
     dates: 'May – Sep 2025',
@@ -49,6 +70,7 @@ export const EXPERIENCE: Role[] = [
     ],
   },
   {
+    kind: 'aba',
     title: 'Shadow Teacher & ABA Therapist',
     org: 'Early Autism Ventures, Hyderabad',
     dates: 'Jul 2024 – Apr 2025',
@@ -59,6 +81,7 @@ export const EXPERIENCE: Role[] = [
     ],
   },
   {
+    kind: 'clinical',
     title: 'Clinical Intern',
     org: 'Calcutta Pavlov Hospital & Calcutta National Medical College, Kolkata',
     dates: 'Jan – May 2021',
@@ -68,6 +91,7 @@ export const EXPERIENCE: Role[] = [
     ],
   },
   {
+    kind: 'remote',
     title: 'Intern',
     org: 'Fortis Healthcare (remote)',
     dates: 'Jul 2020',
