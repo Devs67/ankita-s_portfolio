@@ -24,9 +24,9 @@ export const PROFILE = {
  *   'A misbehaving child is a discouraged child.' — Rudolf Dreikurs, child psychiatrist and educator
  */
 export const QUOTE = {
-  text: 'Every kid needs a champion.',
-  by: 'Rita F. Pierson',
-  note: 'educator · TED Talks Education, 2013',
+  text: 'The world needs all kinds of minds.',
+  by: 'Dr Temple Grandin',
+  note: 'autism advocate, author and professor of animal science',
 };
 
 /** Drop a portrait at public/ankita.jpg; until then a monogram shows in its place. */
