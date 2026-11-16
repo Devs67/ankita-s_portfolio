@@ -13,7 +13,8 @@ export type IconName =
   | 'eye' | 'search' | 'clipboard' | 'people' | 'loop'
   | 'notebook' | 'folder' | 'map' | 'book'
   | 'school' | 'blocks' | 'clinic' | 'laptop' | 'cap' | 'mail'
-  | 'board' | 'door' | 'mic' | 'plate' | 'ball';
+  | 'board' | 'door' | 'mic' | 'plate' | 'ball'
+  | 'exit' | 'hand' | 'gift' | 'wave' | 'flask' | 'bus' | 'shield' | 'bolt' | 'heart' | 'pin' | 'timer' | 'token';
 
 const ICONS: Record<IconName, React.ReactNode> = {
   eye: (
@@ -164,6 +165,87 @@ const ICONS: Record<IconName, React.ReactNode> = {
     <>
       <circle cx="24" cy="24" r="16" fill="var(--color-blush)" {...stroke} />
       <path d="M8 24h32M24 8c-7 6-7 26 0 32M24 8c7 6 7 26 0 32" fill="none" {...stroke} strokeWidth="1.6" />
+    </>
+  ),
+  /* Escape: a doorway with an arrow heading out */
+  exit: (
+    <>
+      <rect x="6" y="6" width="22" height="36" rx="1.5" fill="var(--color-sky)" {...stroke} />
+      <circle cx="23" cy="25" r="1.8" fill={INK} />
+      <path d="M24 24h18M36 18l6 6-6 6" fill="none" {...stroke} stroke="var(--color-margin)" strokeWidth="2.5" />
+    </>
+  ),
+  /* Attention: a raised hand */
+  hand: (
+    <>
+      <path d="M16 42c-4-4-8-10-9-15-.5-2.5 2.5-3.5 4-1.5l4 5V10a2.5 2.5 0 0 1 5 0v12V7a2.5 2.5 0 0 1 5 0v15V9a2.5 2.5 0 0 1 5 0v14-9a2.5 2.5 0 0 1 5 0v15c0 6-3 11-7 13Z" fill="var(--color-butter)" {...stroke} />
+      <path d="M40 6l2-3M44 11l3-1M37 3l0-3" fill="none" {...stroke} stroke="var(--color-margin)" />
+    </>
+  ),
+  /* Tangible: a wrapped present */
+  gift: (
+    <>
+      <rect x="7" y="20" width="34" height="21" rx="1.5" fill="var(--color-mint)" {...stroke} />
+      <rect x="5" y="14" width="38" height="7" rx="1.5" fill="var(--color-mint)" {...stroke} />
+      <path d="M24 14v27" fill="none" {...stroke} stroke="var(--color-margin)" strokeWidth="3" />
+      <path d="M24 14c-3-6-11-8-11-3s8 3 11 3c3 0 11 2 11-3s-8-3-11 3Z" fill="white" {...stroke} />
+    </>
+  ),
+  /* Sensory: sound and movement waves */
+  wave: (
+    <>
+      <circle cx="13" cy="24" r="7" fill="var(--color-blush)" {...stroke} />
+      <path d="M24 16c3 5 3 11 0 16M30 11c5 8 5 18 0 26M36 6c7 11 7 25 0 36" fill="none" {...stroke} />
+    </>
+  ),
+  flask: (
+    <>
+      <path d="M19 5h10M21 5v12L9 38a3 3 0 0 0 3 4h24a3 3 0 0 0 3-4L27 17V5" fill="var(--color-mint)" {...stroke} />
+      <path d="M13 31h22" fill="none" {...stroke} strokeWidth="1.6" />
+      <circle cx="21" cy="36" r="1.8" fill={INK} />
+      <circle cx="28" cy="34" r="1.3" fill={INK} />
+    </>
+  ),
+  bus: (
+    <>
+      <rect x="6" y="8" width="36" height="28" rx="4" fill="var(--color-butter)" {...stroke} />
+      <path d="M6 22h36" fill="none" {...stroke} />
+      <rect x="11" y="12" width="11" height="7" rx="1" fill="white" {...stroke} strokeWidth="1.6" />
+      <rect x="26" y="12" width="11" height="7" rx="1" fill="white" {...stroke} strokeWidth="1.6" />
+      <circle cx="14" cy="38" r="4" fill="white" {...stroke} />
+      <circle cx="34" cy="38" r="4" fill="white" {...stroke} />
+    </>
+  ),
+  shield: (
+    <>
+      <path d="M24 5l16 6v11c0 10-7 17-16 21C15 39 8 32 8 22V11Z" fill="var(--color-sky)" {...stroke} />
+      <path d="M17 23l5 5 9-10" fill="none" {...stroke} stroke="var(--color-margin)" strokeWidth="2.5" />
+    </>
+  ),
+  bolt: (
+    <path d="M27 4L10 27h12l-3 17 19-25H26Z" fill="var(--color-butter)" {...stroke} />
+  ),
+  heart: (
+    <path d="M24 41S6 30 6 17a9 9 0 0 1 18-3 9 9 0 0 1 18 3c0 13-18 24-18 24Z" fill="var(--color-blush)" {...stroke} />
+  ),
+  pin: (
+    <>
+      <path d="M24 43S10 28 10 18a14 14 0 0 1 28 0c0 10-14 25-14 25Z" fill="var(--color-mint)" {...stroke} />
+      <circle cx="24" cy="18" r="5" fill="white" {...stroke} />
+    </>
+  ),
+  timer: (
+    <>
+      <circle cx="24" cy="27" r="15" fill="var(--color-sky)" {...stroke} />
+      <path d="M20 5h8M24 5v7M24 27l6-6" fill="none" {...stroke} />
+      <circle cx="24" cy="27" r="2" fill={INK} />
+    </>
+  ),
+  token: (
+    <>
+      <circle cx="24" cy="24" r="17" fill="var(--color-butter)" {...stroke} />
+      <circle cx="24" cy="24" r="11" fill="none" {...stroke} strokeDasharray="3 3" strokeWidth="1.5" />
+      <path d="M24 16l2.4 5 5.4.6-4 3.7 1.1 5.4L24 28l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6Z" fill="var(--color-margin)" stroke="none" />
     </>
   ),
 };

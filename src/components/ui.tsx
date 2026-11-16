@@ -1,5 +1,4 @@
 import React from 'react';
-import { BehaviorFunction } from '../types/behavioral';
 
 /** A letter circled in margin-red pen, as in the handwritten ABC notes. */
 export function CircledLetter({ letter, className = 'w-9 h-9' }: { letter: string; className?: string }) {
@@ -56,23 +55,6 @@ export function Row({
   );
 }
 
-export function PageIntro({
-  eyebrow,
-  title,
-  children,
-}: {
-  eyebrow: React.ReactNode;
-  title: string;
-  children?: React.ReactNode;
-}) {
-  return (
-    <Row margin={eyebrow} className="pt-12 pb-10 sm:pt-16">
-      <h1 className="text-[2rem] leading-tight sm:text-5xl">{title}</h1>
-      {children && <div className="mt-4 max-w-2xl text-lg">{children}</div>}
-    </Row>
-  );
-}
-
 export function SubHeading({ children }: { children: React.ReactNode }) {
   return <h3 className="mb-2 font-sans text-[0.8125rem] font-bold uppercase tracking-wider text-ink">{children}</h3>;
 }
@@ -89,45 +71,6 @@ export function BulletList({ items }: { items: string[] }) {
     </ul>
   );
 }
-
-/** Horizontal bar with a label and a count, for small distributions. */
-export function Bar({
-  label,
-  value,
-  max,
-  detail,
-  tone = 'ink',
-}: {
-  label: string;
-  value: number;
-  max: number;
-  detail?: string;
-  tone?: 'ink' | 'faint';
-}) {
-  const pct = max > 0 ? Math.max((value / max) * 100, value > 0 ? 3 : 0) : 0;
-  return (
-    <div>
-      <div className="flex items-baseline justify-between gap-3 text-[0.9375rem]">
-        <span className="text-ink">{label}</span>
-        <span className="font-mono text-sm">{detail ?? value}</span>
-      </div>
-      <div className="mt-1 h-2 rounded-full bg-wash">
-        <div
-          className={`h-2 rounded-full ${tone === 'ink' ? 'bg-ink' : 'bg-graphite/40'}`}
-          style={{ width: `${pct}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-export const FUNCTION_SHORT: Record<BehaviorFunction, string> = {
-  'Escape/Avoidance': 'Escape',
-  Attention: 'Attention',
-  'Access to Tangible': 'Tangible',
-  'Automatic/Sensory': 'Sensory',
-  'Multiple / Combined': 'Multiple',
-};
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 

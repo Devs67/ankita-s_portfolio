@@ -1,138 +1,284 @@
 import { useMemo, useState } from 'react';
 import { INITIAL_ABC_LOGS } from '../data/behavioralData';
-import { BehaviorFunction } from '../types/behavioral';
+import { ABCEntry, BehaviorFunction } from '../types/behavioral';
 import { calculateFunctionDistribution, generateTimeOfDayDistribution } from '../utils/behavioralAnalysis';
-import { Bar, CircledLetter, FUNCTION_SHORT, MarginNote, PageIntro, Row, SubHeading, splitTimestamp } from '../components/ui';
+import { CircledLetter, SubHeading, splitTimestamp } from '../components/ui';
+import { Icon } from '../components/art';
+import { EvidenceIntro, FUNCTION_LOOK, FunctionBadge, IntensityMeter, Note, SettingBadge } from '../components/evidence';
 import { EvidenceBack } from './EvidenceBack';
+
+const FN_FILL: Record<BehaviorFunction, string> = {
+  'Escape/Avoidance': 'var(--color-sky)',
+  Attention: 'var(--color-butter)',
+  'Access to Tangible': 'var(--color-mint)',
+  'Automatic/Sensory': 'var(--color-blush)',
+  'Multiple / Combined': 'var(--color-wash)',
+};
+
+const SLOT_SHORT = ['Arrival', 'Lessons', 'Lunch & recess', 'Afternoon', 'Home time'];
 
 export function ObservationsPage() {
   const [fn, setFn] = useState<BehaviorFunction | 'all'>('all');
 
   const distribution = useMemo(() => calculateFunctionDistribution(INITIAL_ABC_LOGS).filter((d) => d.count > 0), []);
   const timeOfDay = useMemo(() => generateTimeOfDayDistribution(INITIAL_ABC_LOGS), []);
-  const maxFn = Math.max(...distribution.map((d) => d.count));
-  const maxSlot = Math.max(...timeOfDay.map((s) => s.count));
-
+  const top = distribution.reduce((a, b) => (b.count > a.count ? b : a));
+  const peak = timeOfDay.reduce((a, b) => (b.count > a.count ? b : a));
   const records = fn === 'all' ? INITIAL_ABC_LOGS : INITIAL_ABC_LOGS.filter((l) => l.perceivedFunction === fn);
 
   return (
     <>
-      <PageIntro eyebrow={<EvidenceBack />} title="Observation records">
-        <p>
-          Each record follows the ABC format: what happened just before (<em>antecedent</em>), what the student did (
-          <em>behaviour</em>), and what followed (<em>consequence</em>). Read together, the records show what a behaviour is doing
-          for the child.
-        </p>
-      </PageIntro>
+      <EvidenceIntro
+        back={<EvidenceBack />}
+        title="Observation records"
+        intro="What came before, what the child did, what came after — noted as it happened."
+        icon="notebook"
+        tile="bg-sky"
+        note="every record is an A → B → C"
+      />
 
-      <Row margin={<MarginNote>Patterns</MarginNote>} className="border-t border-rule py-12">
-        <div className="grid gap-12 lg:grid-cols-2">
+      {/* What the behaviour is for: the tiles double as the filter */}
+      <section aria-labelledby="fn-title" className="border-t border-rule py-10">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <SubHeading>What the behaviour gets the child</SubHeading>
-            <div className="mt-4 space-y-4">
-              {distribution.map((d) => (
-                <Bar key={d.functionName} label={d.functionName} value={d.count} max={maxFn} detail={`${d.count} · ${d.percentage}%`} />
-              ))}
-            </div>
+            <SubHeading>
+              <span id="fn-title">What the behaviour gets the child</span>
+            </SubHeading>
+            <p className="text-sm">Tap a card to see only those records.</p>
           </div>
-          <div>
-            <SubHeading>When it happens</SubHeading>
-            <div className="mt-4 space-y-4">
-              {timeOfDay.map((s) => (
-                <Bar key={s.slot} label={s.timeRange} value={s.count} max={maxSlot} detail={`${s.count}`} />
-              ))}
-            </div>
-          </div>
+          <button
+            type="button"
+            aria-pressed={fn === 'all'}
+            onClick={() => setFn('all')}
+            className={`rounded-full border px-3.5 py-1.5 text-sm ${fn === 'all' ? 'border-ink bg-ink text-paper' : 'border-rule bg-white/70 text-ink hover:border-ink'}`}
+          >
+            All {INITIAL_ABC_LOGS.length}
+          </button>
         </div>
-      </Row>
-
-      <Row margin={<MarginNote>Records</MarginNote>} className="border-t border-rule pt-12">
-        <div role="group" aria-label="Filter by function" className="flex flex-wrap gap-2">
-          {(['all', ...distribution.map((d) => d.functionName)] as const).map((option) => {
-            const active = fn === option;
-            const count = option === 'all' ? INITIAL_ABC_LOGS.length : distribution.find((d) => d.functionName === option)?.count;
+        <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {distribution.map((d) => {
+            const look = FUNCTION_LOOK[d.functionName];
+            const active = fn === d.functionName;
             return (
               <button
-                key={option}
+                key={d.functionName}
                 type="button"
                 aria-pressed={active}
-                onClick={() => setFn(option)}
-                className={`rounded-full border px-3.5 py-1.5 text-sm transition-colors ${
-                  active ? 'border-ink bg-ink text-paper' : 'border-rule text-ink hover:border-ink'
+                onClick={() => setFn(active ? 'all' : d.functionName)}
+                className={`relative rounded-2xl border-2 bg-white p-4 text-left transition-all ${
+                  active ? 'border-ink shadow-[5px_5px_0_var(--color-ink)]' : 'border-transparent ring-1 ring-rule hover:border-ink/40'
                 }`}
               >
-                {option === 'all' ? 'All' : FUNCTION_SHORT[option]} <span className="font-mono text-xs opacity-75">{count}</span>
+                <span className="flex items-start justify-between gap-2">
+                  <span className={`grid h-12 w-12 place-items-center rounded-xl ${look.tile}`}>
+                    <Icon name={look.icon} className="h-9 w-9" />
+                  </span>
+                  <span className="font-display text-3xl leading-none text-ink">{d.count}</span>
+                </span>
+                <span className="mt-3 block font-bold text-ink">{look.short}</span>
+                <span className="block text-sm">{look.plain}</span>
+                <span aria-hidden="true" className="mt-3 flex gap-1">
+                  {INITIAL_ABC_LOGS.map((_, i) => (
+                    <span key={i} className={`h-1.5 flex-1 rounded-full ${i < d.count ? 'bg-ink' : 'bg-rule'}`} />
+                  ))}
+                </span>
+                {d.count === top.count && <span className="absolute -top-3 right-3 rotate-3 rounded bg-tape px-2 font-hand text-sm text-ink">most often</span>}
               </button>
             );
           })}
         </div>
-      </Row>
+      </section>
 
-      <div className="pb-8">
-        {records.map((log) => {
-          const { date, time } = splitTimestamp(log.timestamp);
-          return (
-            <Row
-              key={log.id}
-              as="article"
-              className="border-b border-rule py-10 last:border-b-0"
-              margin={
-                <div className="font-mono text-sm">
-                  <div className="text-margin">{date}</div>
-                  <div className="text-graphite">{time}</div>
-                </div>
-              }
-            >
-              <p className="font-mono text-[0.8125rem] text-graphite">
-                {log.studentCode} · {log.setting} · {log.intensity} · {log.durationMinutes} min
-              </p>
+      {/* When it happens: the school day as a timeline */}
+      <section aria-labelledby="day-title" className="border-t border-rule py-10">
+        <SubHeading>
+          <span id="day-title">When it happens</span>
+        </SubHeading>
+        <div className="mt-4 rounded-2xl bg-white/80 p-4 ring-1 ring-rule sm:p-6">
+          <DayStrip logs={INITIAL_ABC_LOGS} peakIndex={timeOfDay.indexOf(peak)} />
+          <Note className="mt-2">
+            ↑ busiest stretch: {SLOT_SHORT[timeOfDay.indexOf(peak)].toLowerCase()} ({peak.timeRange.replace(' - ', '–')}) — {peak.count} of{' '}
+            {INITIAL_ABC_LOGS.length} incidents
+          </Note>
+        </div>
+      </section>
 
-              <dl className="mt-4 space-y-3">
-                {[
-                  ['A', 'Antecedent', log.antecedent],
-                  ['B', 'Behaviour', log.behavior],
-                  ['C', 'Consequence', log.consequence],
-                ].map(([letter, term, text]) => (
-                  <div key={letter} className="flex gap-3">
-                    <dt>
-                      <CircledLetter letter={letter} className="h-8 w-8" />
-                      <span className="sr-only">{term}</span>
-                    </dt>
-                    <dd className="max-w-3xl pt-0.5 text-ink">{text}</dd>
-                  </div>
-                ))}
-              </dl>
-
-              <dl className="mt-6 grid max-w-3xl gap-x-8 gap-y-4 text-[0.9375rem] sm:grid-cols-2">
-                <div>
-                  <dt className="font-mono text-xs">Function</dt>
-                  <dd className="text-ink">{log.perceivedFunction}</dd>
-                </div>
-                {log.settingEvents && (
-                  <div>
-                    <dt className="font-mono text-xs">Background that day</dt>
-                    <dd>{log.settingEvents}</dd>
-                  </div>
-                )}
-                <div>
-                  <dt className="font-mono text-xs">Replacement taught</dt>
-                  <dd>{log.replacementBehavior}</dd>
-                </div>
-                <div>
-                  <dt className="font-mono text-xs">Response used</dt>
-                  <dd>{log.consequenceInterventionApplied}</dd>
-                </div>
-                {log.notes && (
-                  <div className="sm:col-span-2">
-                    <dt className="font-mono text-xs">Notes</dt>
-                    <dd>{log.notes}</dd>
-                  </div>
-                )}
-              </dl>
-            </Row>
-          );
-        })}
-      </div>
+      {/* The records themselves */}
+      <section aria-labelledby="rec-title" className="border-t border-rule pt-10 pb-16">
+        <div className="flex items-baseline justify-between gap-4">
+          <SubHeading>
+            <span id="rec-title">Records</span>
+          </SubHeading>
+          <span className="font-mono text-sm">
+            {records.length} shown{fn !== 'all' && ` · ${FUNCTION_LOOK[fn].short}`}
+          </span>
+        </div>
+        <div className="mt-5 grid gap-5">
+          {records.map((log) => (
+            <RecordCard key={log.id} log={log} />
+          ))}
+        </div>
+      </section>
     </>
+  );
+}
+
+/** 08:00–16:00 with each incident placed at its time, coloured by what it was for. */
+function DayStrip({ logs, peakIndex }: { logs: ABCEntry[]; peakIndex: number }) {
+  const W = 640;
+  const x0 = 16;
+  const x1 = W - 16;
+  const xAt = (hours: number) => x0 + ((hours - 8) / 8) * (x1 - x0);
+  const bounds = [8, 9.5, 11.5, 13, 14.5, 16];
+  const placed = logs
+    .map((l) => {
+      const [h, m] = splitTimestamp(l.timestamp).time.split(':').map(Number);
+      return { log: l, x: xAt(h + m / 60) };
+    })
+    .sort((a, b) => a.x - b.x);
+  // Stack incidents that sit close together so none hide another
+  const rows: number[] = [];
+  const dots = placed.map((p) => {
+    let row = 0;
+    while (rows[row] !== undefined && p.x - rows[row] < 20) row++;
+    rows[row] = p.x;
+    return { ...p, y: 64 - row * 20 };
+  });
+
+  return (
+    <svg viewBox={`0 0 ${W} 120`} role="img" aria-label="Incidents placed across the school day from 8am to 4pm" className="h-auto w-full">
+      {bounds.slice(0, -1).map((b, i) => (
+        <g key={b}>
+          <rect
+            x={xAt(b)}
+            y="8"
+            width={xAt(bounds[i + 1]) - xAt(b) - 2}
+            height="76"
+            rx="8"
+            fill={i === peakIndex ? 'var(--color-butter)' : 'var(--color-wash)'}
+            opacity={i === peakIndex ? 0.7 : 0.6}
+          />
+          <text x={(xAt(b) + xAt(bounds[i + 1])) / 2} y="112" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="12" fill="var(--color-graphite)">
+            {SLOT_SHORT[i]}
+          </text>
+        </g>
+      ))}
+      <line x1={x0} x2={x1} y1="84" y2="84" stroke="var(--color-ink)" strokeWidth="2" strokeLinecap="round" />
+      {[8, 10, 12, 14, 16].map((h) => (
+        <text key={h} x={xAt(h)} y="97" textAnchor={h === 8 ? 'start' : h === 16 ? 'end' : 'middle'} fontFamily="var(--font-mono)" fontSize="10" fill="var(--color-graphite)">
+          {h > 12 ? h - 12 : h}
+          {h >= 12 ? 'pm' : 'am'}
+        </text>
+      ))}
+      {dots.map(({ log, x, y }) => {
+        const { date, time } = splitTimestamp(log.timestamp);
+        return (
+          <circle key={log.id} cx={x} cy={y} r="8.5" fill={FN_FILL[log.perceivedFunction]} stroke="var(--color-ink)" strokeWidth="2">
+            <title>
+              {`${time}, ${date} · ${FUNCTION_LOOK[log.perceivedFunction].short} · ${log.intensity}`}
+            </title>
+          </circle>
+        );
+      })}
+    </svg>
+  );
+}
+
+const ABC = [
+  { key: 'antecedent', letter: 'A', label: 'Just before' },
+  { key: 'behavior', letter: 'B', label: 'What happened' },
+  { key: 'consequence', letter: 'C', label: 'Just after' },
+] as const;
+
+function RecordCard({ log }: { log: ABCEntry }) {
+  const [open, setOpen] = useState(false);
+  const { date, time } = splitTimestamp(log.timestamp);
+  const student = log.studentCode.replace(/\s*\(.*\)/, '');
+
+  return (
+    <article className="rounded-2xl bg-white/85 p-5 ring-1 ring-rule sm:p-6">
+      <header className="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <span className="font-mono text-sm text-margin">
+          {date} · {time}
+        </span>
+        <SettingBadge setting={log.setting} />
+        <IntensityMeter level={log.intensity} />
+        <span className="inline-flex items-center gap-1 text-sm text-ink">
+          <Icon name="timer" className="h-5 w-5" /> {log.durationMinutes} min
+        </span>
+        <span className="ml-auto flex items-center gap-2">
+          <span className="font-mono text-xs">
+            {student} · {log.programme}
+          </span>
+          <FunctionBadge fn={log.perceivedFunction} />
+        </span>
+      </header>
+
+      <ol className="mt-5 grid gap-3 md:grid-cols-3 md:gap-0">
+        {ABC.map((step, i) => (
+          <li key={step.key} className="relative flex gap-3 rounded-xl bg-wash/60 p-3.5 md:mr-6">
+            <CircledLetter letter={step.letter} className="h-8 w-8" />
+            <div className="min-w-0">
+              <p className="font-mono text-xs">{step.label}</p>
+              <p className={`text-[0.9375rem] text-ink ${open ? '' : 'line-clamp-3'}`}>{log[step.key]}</p>
+            </div>
+            {i < 2 && (
+              <span aria-hidden="true" className="absolute top-1/2 -right-5 hidden -translate-y-1/2 font-display text-xl text-margin md:block">
+                →
+              </span>
+            )}
+          </li>
+        ))}
+      </ol>
+
+      {open && (
+        <dl className="mt-5 grid gap-4 text-[0.9375rem] sm:grid-cols-2">
+          <div className="flex gap-3">
+            <Icon name="blocks" className="h-8 w-8" />
+            <div>
+              <dt className="font-mono text-xs">Skill taught instead</dt>
+              <dd className="text-ink">{log.replacementBehavior}</dd>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <Icon name="people" className="h-8 w-8" />
+            <div>
+              <dt className="font-mono text-xs">How adults responded</dt>
+              <dd className="text-ink">{log.consequenceInterventionApplied}</dd>
+            </div>
+          </div>
+          {log.settingEvents && (
+            <div className="flex gap-3">
+              <Icon name="pin" className="h-8 w-8" />
+              <div>
+                <dt className="font-mono text-xs">Background that day</dt>
+                <dd>{log.settingEvents}</dd>
+              </div>
+            </div>
+          )}
+          {log.notes && (
+            <div className="flex gap-3">
+              <Icon name="notebook" className="h-8 w-8" />
+              <div>
+                <dt className="font-mono text-xs">Therapist’s note</dt>
+                <dd className="font-hand text-lg leading-snug text-ink">{log.notes}</dd>
+              </div>
+            </div>
+          )}
+        </dl>
+      )}
+
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-rule bg-white px-3 py-1 font-mono text-xs text-ink hover:border-ink"
+      >
+        <span aria-hidden="true" className={`transition-transform ${open ? 'rotate-90' : ''}`}>
+          ▸
+        </span>
+        {open ? 'Show less' : 'Read full record'}
+      </button>
+    </article>
   );
 }
